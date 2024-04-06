@@ -30,4 +30,6 @@ urlpatterns = [
 
     path('master/office/type', mst_view.OfficeTypeList.as_view()),
     path('master/office/type/<int:pk>', mst_view.OfficeTypeDetails.as_view()),
+
+    
 ]

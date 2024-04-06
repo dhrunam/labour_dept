@@ -4,7 +4,7 @@ from master import models as mst_model
 # Create your models here.
 
 class ApplicationForCertificateOfEstablishment(models.Model):
-    office_situated_at = models.ForeignKey(mst_model.District, on_delete=models.SET_NULL, null= True, related_name = "application_for_est" ),
+    office_location = models.ForeignKey(mst_model.District, on_delete = models.SET_NULL, null = True, related_name= "application_for_est")
     registration_status = models.CharField(max_length=128, null=False)
     full_name_applicant = models.CharField(max_length =256, null=False)
     email_applicant = models.CharField(max_length =256, null=False)
@@ -29,7 +29,7 @@ class ApplicationForCertificateOfEstablishment(models.Model):
 
 
 class EmployerParentageDetails(models.Model):
-    application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "co_employer")
+    application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_parentel_details")
     parentage_name = models.CharField(max_length =256, null=False)
     designation = models.CharField(max_length =128, null=False)
     permanent_address = models.CharField(max_length =128, null=False)

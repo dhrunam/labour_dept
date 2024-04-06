@@ -17,9 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from master import urls as mst_urls
+from operation import urls as op_urls
+from account import urls as acc_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(mst_urls)),
+    path('api/', include(op_urls)),
+    path('/',include(acc_urls)),
 
 ]
