@@ -4,7 +4,7 @@ from master import serializers as mst_serializers
 
 
 class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerializer):
-    related_office_situated_at = mst_serializers.DistrictSerializer(source='office_situated_at', many=False, read_only = True)
+    related_office_situated_at = mst_serializers.DistrictSerializer(source='office_location', many=False, read_only = True)
     related_establishment_category = mst_serializers.EstablishmentCategorySerializer(source='establishment_category', many=False, read_only=True)
     related_applied_office_details = mst_serializers.OfficeDetailsSerializer(source='applied_office_details', many=False, read_only=True)
      
