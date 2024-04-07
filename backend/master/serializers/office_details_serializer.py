@@ -7,6 +7,7 @@ class OfficeDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = mst_models.OfficeDetails
         fields = (
+            'id',
             'district',
             'office_type',
             'address',

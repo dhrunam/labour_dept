@@ -6,6 +6,7 @@ class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = mst_models.District
         fields = (
+            'id',
             'district_name',
             'short_name',
             'is_deleted'

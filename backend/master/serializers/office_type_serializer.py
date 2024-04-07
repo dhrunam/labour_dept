@@ -6,6 +6,7 @@ class OfficeTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = mst_models.OfficeType
         fields = (
+            'id',
             'type',
             'short_name',
             'is_deleted'
