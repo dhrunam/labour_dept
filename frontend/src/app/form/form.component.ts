@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FormService } from './form.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -14,8 +15,9 @@ export class FormComponent {
   districts: Array<any> = [];
   establishments: Array<any> = [];
   agree: boolean = false;
+  loader: boolean = false;
   photo: any;
-  constructor(private formService: FormService){}
+  constructor(private formService: FormService, private router: Router){}
   ngOnInit(): void{
     this.get_districts();
     this.get_establishments();
@@ -55,9 +57,10 @@ export class FormComponent {
       data.control.markAllAsTouched();
     }
     else{
+      this.loader = true;
       let fd = new FormData();
       fd.append('office_location', data.value.district);
-      fd.append('registration_status', data.value.registration_status);
+      fd.append('registration_status', data.value.registration_type);
       fd.append('full_name_applicant', data.value.full_name);
       fd.append('email_applicant', data.value.email);
       fd.append('photograph_applicant', this.photo);
@@ -82,7 +85,8 @@ export class FormComponent {
       fd.append('management_level_employee_details', '[{"name":"xyz","age":30.00,"relationship":"Test"},{"name":"adviseer","age":40.00,"relationship":"Test"}]');
       this.formService.submit_application(fd).subscribe({
         next: data => {
-          console.log(data);
+          this.loader = false;
+          this.router.navigate(['/acknowledgement']);
         }
       })
     }
