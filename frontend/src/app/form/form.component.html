@@ -229,16 +229,13 @@
                     <label>Total Number of Employees<span class="text-danger">*</span></label>
                     <hr>
                     <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Adult (18 years and above)" name="old" ngModel #old="ngModel" required>
-                        </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <input type="text" class="form-control shadow-none" placeholder="Male" name="old_male" ngModel #old_male="ngModel" required>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" ngModel #old_female="ngModel" required>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <input type="text" class="form-control shadow-none" placeholder="Total" name="old_total" ngModel #old_total="ngModel" required>
                         </div>
                     </div>
@@ -249,16 +246,13 @@
                     <label>Total Number of Employees<span class="text-danger">*</span></label>
                     <hr>
                     <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Young Person (14-17 years of age)" name="young" ngModel #young="ngModel" required>
-                        </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <input type="text" class="form-control shadow-none" placeholder="Male" name="young_male" ngModel #young_male="ngModel" required>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <input type="text" class="form-control shadow-none" placeholder="Female" name="young_female" ngModel #young_female="ngModel" required>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <input type="text" class="form-control shadow-none" placeholder="Total" name="young_total" ngModel #young_total="ngModel" required>
                         </div>
                     </div>
@@ -296,7 +290,15 @@
             </div>
         </div>
         <div class="controls mt-3 mb-5 text-end">
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" type="submit">
+                @if(loader){
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                }
+                @else{
+                    Submit
+                }
+            </button>
         </div>
     </form>
 </section>
