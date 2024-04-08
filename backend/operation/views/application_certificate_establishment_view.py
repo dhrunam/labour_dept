@@ -47,6 +47,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
                         application_certificate_establishment = instance,
                         name = data['name'],
                         age = data['age'],
+                        gender = data['gender'],
                         relationship =data['relationship']
 
                 )
@@ -57,6 +58,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
                         application_certificate_establishment = instance,
                         name = data['name'],
                         age = data['age'],
+                        gender = data['gender'],
                         relationship =data['relationship']
 
                 )
