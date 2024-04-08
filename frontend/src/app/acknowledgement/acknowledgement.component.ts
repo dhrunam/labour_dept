@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-acknowledgement',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './acknowledgement.component.html',
   styleUrl: './acknowledgement.component.css'
 })

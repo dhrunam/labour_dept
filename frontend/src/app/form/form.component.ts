@@ -14,6 +14,10 @@ export class FormComponent {
   offices: Array<any> = [];
   districts: Array<any> = [];
   establishments: Array<any> = [];
+  employer_parentage_details: Array<any> = [];
+  employer_details: Array<any> = [];
+  employer_family_member_details: Array<any> = [];
+  management_level_employee_details: Array<any> = [];
   agree: boolean = false;
   loader: boolean = false;
   photo: any;
@@ -52,6 +56,89 @@ export class FormComponent {
       this.photo = event.target.files[0];
     }
   }
+  employerParentageDetails(key: string, data: any){
+    if(key === 'add'){
+      if(data.employer_parentage_name === '' && data.employer_parentage_desg  === '' && data.employer_parentage_addr === '' && data.employer_parentage_interest === ''){
+        alert('Please enter values to the corresponding fields')
+      }
+      else{
+        this.employer_parentage_details.push({
+          "parentage_name": data.employer_parentage_name,
+          "designation": data.employer_parentage_desg || 'N/A',
+          "permanent_address": data.employer_parentage_addr || 'N/A',
+          "nature_interest": data.employer_parentage_interest || 'N/A',
+        })
+      }
+    }
+    else{
+      let index = this.employer_parentage_details.findIndex(i => i.parentage_name === data.employer_parentage_name);
+      if(index >= 0){
+        this.employer_parentage_details.splice(index, 1);
+      }
+    }
+  }
+  employerDetails(key: string, data: any){
+    if(key === 'add'){
+      if(data.employer_name === '' && data.employer_desg === '' && data.employer_addr === ''){
+        alert('Please enter values to the corresponding fields')
+      }
+      else{
+        this.employer_details.push({
+          "name": data.employer_name,
+          "designation": data.employer_desg || 'N/A',
+          "permanent_address": data.employer_addr || 'N/A'
+        })
+      }
+    }
+    else{
+      let index = this.employer_details.findIndex(i => i.name === data.employer_name);
+      if(index >= 0){
+        this.employer_details.splice(index, 1);
+      }
+    }
+  }
+  employerFamilyMemberDetails(key: string, data: any){
+    if(key === 'add'){
+      if(data.employer_family_name === '' && data.employer_family_age === '' && data.employer_family_rel === '' && data.employer_family_gender === ''){
+        alert('Please enter values to the corresponding fields')
+      }
+      else{
+        this.employer_family_member_details.push({
+          "name": data.employer_family_name,
+          "age": data.employer_family_age || 'N/A',
+          "gender": data.employer_family_gender || 'N/A',
+          "relationship": data.employer_family_rel || 'N/A'
+        })
+      }
+    }
+    else{
+      let index = this.employer_family_member_details.findIndex(i => i.name === data.employer_family_name);
+      if(index >= 0){
+        this.employer_family_member_details.splice(index, 1);
+      }
+    }
+  }
+  managementEmployeeDetails(key: string, data: any){
+    if(key === 'add'){
+      if(data.employer_management_name === '' && data.employer_management_age === '' && data.employer_management_rel === '' && data.employer_management_gender === ''){
+        alert('Please enter values to the corresponding fields')
+      }
+      else{
+        this.management_level_employee_details.push({
+          "name": data.employer_management_name,
+          "age": data.employer_management_age || 'N/A',
+          "gender": data.employer_management_gender || 'N/A',
+          "relationship": data.employer_management_rel || 'N/A'
+        })
+      }
+    }
+    else{
+      let index = this.management_level_employee_details.findIndex(i => i.name === data.employer_management_name);
+      if(index >= 0){
+        this.management_level_employee_details.splice(index, 1);
+      }
+    }
+  }
   submitForm(data: NgForm){
     if(!data.valid){
       data.control.markAllAsTouched();
@@ -72,17 +159,17 @@ export class FormComponent {
       fd.append('nature_business', data.value.nature_of_business);
       fd.append('total_emplyee_male_18', data.value.old_male);
       fd.append('total_emplyee_female_18', data.value.old_female);
-      fd.append('total_emplyee_other_18', data.value.old_total);
+      fd.append('total_emplyee_other_18', '0');
       fd.append('total_emplyee_male_14', data.value.young_male);
       fd.append('total_emplyee_female_14', data.value.young_female);
-      fd.append('total_emplyee_other_14', data.value.young_total);
+      fd.append('total_emplyee_other_14', '0');
       fd.append('weekly_holidays_name', data.value.weekly_holidays);
       fd.append('is_agreed_terms_and_condition', this.agree ? 'True':'False');
       fd.append('applied_office_details', data.value.office);
-      fd.append('employer_parentage_details', '[{"parentage_name":"Test", "designation":"adviseer","permanent_address":"Test","nature_interest":"Test"},{"parentage_name":"Test1", "designation":"adviseer","permanent_address":"Test","nature_interest":"Test"},{"parentage_name":"Test2", "designation":"adviseer","permanent_address":"Test","nature_interest":"Test"}]');
-      fd.append('employer_details', '[{"designation":"adviseer","name":"Test","permanent_address":"Test"},{"designation":"adviseer","name":"Test","permanent_address":"Test"}]');
-      fd.append('employer_family_member_details', '[{"name":"xyz","age":70.00,"relationship":"Test"},{"name":"adviseer","age":60.6,"relationship":"Test"}]');
-      fd.append('management_level_employee_details', '[{"name":"xyz","age":30.00,"relationship":"Test"},{"name":"adviseer","age":40.00,"relationship":"Test"}]');
+      fd.append('employer_parentage_details', JSON.stringify(this.employer_parentage_details));
+      fd.append('employer_details', JSON.stringify(this.employer_details));
+      fd.append('employer_family_member_details', JSON.stringify(this.employer_family_member_details));
+      fd.append('management_level_employee_details', JSON.stringify(this.management_level_employee_details));
       this.formService.submit_application(fd).subscribe({
         next: data => {
           this.loader = false;

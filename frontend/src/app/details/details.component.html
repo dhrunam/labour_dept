@@ -1,0 +1,236 @@
+<div class="applying">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Applying To</h5>
+        <span class="text-danger">Note: Fields marked with (*) are mandatory</span>
+    </div>
+    <hr>
+    <div class="row g-3">
+        <div class="col-12 col-md-4">
+            <label class="form-label">Department</label>
+            <input type="text" class="form-control shadow-none" value="Department of Labour" disabled>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label">District</label>
+            <input type="text" class="form-control" name="district" [ngModel]="details && details.related_office_situated_at.district_name" disabled>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label">Registration Type</label>
+            <input type="text" class="form-control" name="registration_type" [ngModel]="details && details.registration_status" disabled>
+        </div>
+    </div>
+</div>
+<div class="details mt-3">
+    <h5>Application Details</h5>
+    <hr>
+    <div class="row g-3">
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control shadow-none" name="full_name" [value]="details && details.full_name_applicant" disabled>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">E-Mail</label>
+            <input type="text" class="form-control shadow-none" name="email" [value]="details && details.email_applicant" disabled>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Establishments Name</label>
+            <input type="text" class="form-control shadow-none" name="establishment_name" [value]="details && details.establishment_name" disabled>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Applicants Photograph</label><br>
+            <span><a [href]="details && details.photograph_applicant" target="_blank">View</a></span>
+        </div>
+    </div>
+    <div class="row g-3 mt-2">
+        <div class="col-12 col-md-6">
+            <label class="form-label">Full postal address and location of the establishment</label>
+            <textarea class="form-control shadow-none" cols="2" rows="7" name="address" [value]="details && details.establishment_address" disabled></textarea>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Situation of Office, storeroom, Godown, warehouse or workplace. If any attached to the establishment but situated in the premises different from those of the Establishment</label>
+            <textarea class="form-control shadow-none" cols="2" rows="5" name="situation" [value]="details && details.situation_of_other_premises" disabled></textarea>
+        </div>
+    </div>
+    <div class="row g-3 mt-2">
+        <div class="col-12 col-md-6">
+            <label class="form-label">Category of Establishment</label>
+            <input type="text" class="form-control" [value]="details && details.related_establishment_category.category" disabled>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Nature of Business</label>
+            <input type="text" class="form-control shadow-none" [value]="details && details.nature_business" disabled>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label>Particulars of the person having interest in the Establishment as Employer (applicable only where a nomination is made under Section 76)</label>
+            <hr>
+            @if(details && details.related_employer_parentage_details[0]){
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name Parentage</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Permanent Address</th>
+                            <th scope="col">Nature of Interest</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(epd of details.related_employer_parentage_details; track epd){
+                            <tr>
+                                <td>{{epd.parentage_name}}</td>
+                                <td>{{epd.designation}}</td>
+                                <td>{{epd.permanent_address}}</td>
+                                <td>{{epd.nature_interest}}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @else{
+                N/A
+            }
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label>Name, Designation and Permanent Address of the Employer</label>
+            <hr>
+            @if(details && details.related_employer_details[0]){
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Permanent Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(ed of details.related_employer_details; track ed){
+                            <tr>
+                                <td>{{ed.name}}</td>
+                                <td>{{ed.designation}}</td>
+                                <td>{{ed.permanent_address}}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @else{
+                N/A
+            }
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label>Particulars of the members of the Employer's family employed in the Establishments as defined in Section 2(17)</label>
+            <hr>
+            @if(details && details.related_employer_family_member_details[0]){
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(efmd of details.related_employer_family_member_details; track efmd){
+                            <tr>
+                                <td>{{efmd.name}}</td>
+                                <td>{{efmd.age.split('.')[0]}}</td>
+                                <td>{{efmd.relationship}}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @else{
+                N/A
+            }
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label>Name of the other person occupying the position of the Management or Employees engaged confidential capacity, if any</label>
+            <hr>
+            @if(details && details.related_management_level_employee_details[0]){
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(mled of details.related_management_level_employee_details; track mled){
+                            <tr>
+                                <td>{{mled.name}}</td>
+                                <td>{{mled.age.split('.')[0]}}</td>
+                                <td>{{mled.relationship}}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @else{
+                N/A
+            }
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label>Total Number of Employees</label>
+            <hr>
+            <div class="row g-3 mt-2">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Male</label><br>
+                    <input type="text" class="form-control shadow-none" placeholder="Male" name="old_male" [value]="details && details.total_emplyee_male_18" disabled>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Female</label><br>
+                    <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" [value]="details && details.total_emplyee_female_18" disabled>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Total</label><br>
+                    <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" [value]="details && (details.total_emplyee_female_18+details.total_emplyee_male_18)" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label>Total Number of Employees</label>
+            <hr>
+            <div class="row g-3 mt-2">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Male</label><br>
+                    <input type="text" class="form-control shadow-none" placeholder="Male" [value]="details && details.total_emplyee_male_14" disabled>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Female</label><br>
+                    <input type="text" class="form-control shadow-none" placeholder="Female" [value]="details && details.total_emplyee_female_14" disabled>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Total</label><br>
+                    <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" [value]="details && (details.total_emplyee_female_14+details.total_emplyee_male_14)" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <label class="form-label">Name of the day of the week on which weekly holidays will be observed; as per relevant Notification (in case of Shop and Commercial Establishments only)</label>
+            <input type="text" class="form-control shadow-none" [value]="details && details.weekly_holidays_name" disabled>
+        </div>
+    </div>
+</div>
+<div class="additional mt-3 mb-5">
+    <h5>Additional Details</h5>
+    <hr>
+    <div class="row">
+        <div class="col-4">
+            <label class="form-label">Applied to Office</label>
+            <input type="text" class="form-control" [value]="details && details.related_applied_office_details.address" disabled>
+        </div>
+    </div>
+</div>
