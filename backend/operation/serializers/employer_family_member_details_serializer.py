@@ -10,5 +10,6 @@ class EmployerFamilyMemberDetailsSerializer(serializers.ModelSerializer):
             'application_certificate_establishment',
             'name',
             'age',
+            'gender',
             'relationship',
         )
