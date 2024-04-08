@@ -25,5 +25,4 @@ urlpatterns = [
     path('api/', include(mst_urls)),
     path('api/', include(op_urls)),
     path('/',include(acc_urls)),
-
 ]

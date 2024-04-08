@@ -56,7 +56,7 @@
             <div class="row g-3 mt-2">
                 <div class="col-12 col-md-6">
                     <label class="form-label">Full postal address and location of the establishment<span class="text-danger">*</span></label>
-                    <textarea class="form-control shadow-none" cols="2" rows="5" name="address" ngModel #address="ngModel" required></textarea>
+                    <textarea class="form-control shadow-none" cols="2" rows="7" name="address" ngModel #address="ngModel" required></textarea>
                 </div>
                 <div class="col-12 col-md-6">
                     <label class="form-label">Situation of Office, storeroom, Godown, warehouse or workplace. If any attached to the establishment but situated in the premises different from those of the Establishment<span class="text-danger">*</span></label>
@@ -80,43 +80,106 @@
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <label>Name, Designation and Permanent Address of the Employer</label>
+                    <label>Particulars of the person having interest in the Establishment as Employer (applicable only where a nomination is made under Section 76)</label>
                     <hr>
+                    @if(employer_parentage_details[0]){
+                        <ul class="list-group mb-3">
+                            @for(epd of employer_parentage_details; track epd){
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{{epd.parentage_name}}</span>
+                                    <span>{{epd.designation}}</span>
+                                    <span>{{epd.permanent_address}}</span>
+                                    <span>{{epd.nature_interest}}</span>
+                                    <span class="text-danger" (click)="employerParentageDetails('delete', { employer_parentage_name: epd.parentage_name })" style="cursor: pointer">X</span>
+                                </li>
+                            }
+                        </ul>
+                    }
                     <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Full Name of Employer">
+                        <div class="col-12 col-md-2">
+                            <input type="text" class="form-control shadow-none" placeholder="Name Parentage" name="employer_parentage_name" ngModel #employer_parentage_name="ngModel">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <input type="text" class="form-control shadow-none" placeholder="Designation" name="employer_parentage_desg" ngModel #employer_parentage_desg="ngModel">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address" name="employer_parentage_addr" ngModel #employer_parentage_addr="ngModel">
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Designation of Employer">
-                        </div>
-                        <div class="col-12 col-md-5">
-                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address">
+                            <input type="text" class="form-control shadow-none" placeholder="Nature of interest: (Whether Partnership Member, Director Shareholders)" name="employer_parentage_interest" ngModel #employer_parentage_interest="ngModel">
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-primary">+</button>
+                            <button class="btn btn-primary" type="button" (click)="employerParentageDetails('add', { employer_parentage_name: employer_parentage_name.value, employer_parentage_desg: employer_parentage_desg.value, employer_parentage_addr: employer_parentage_addr.value, employer_parentage_interest: employer_parentage_interest.value })">+</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <label>Particulars of the members of the Employer's family employed in the Establishments as defined in Section 2(17)</label>
+                    <label>Name, Designation and Permanent Address of the Employer</label>
                     <hr>
+                    @if(employer_details[0]){
+                        <ul class="list-group mb-3">
+                            @for(ed of employer_details; track ed){
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{{ed.name}}</span>
+                                    <span>{{ed.designation}}</span>
+                                    <span>{{ed.permanent_address}}</span>
+                                    <span class="text-danger" (click)="employerDetails('delete', { employer_name: ed.name })" style="cursor: pointer">X</span>
+                                </li>
+                            }
+                            
+                        </ul>
+                    }
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Full Name">
-                        </div>
-                        <div class="col-12 col-md-2">
-                            <input type="text" class="form-control shadow-none" placeholder="Age">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name of Employer" name="employer_name" ngModel #employer_name="ngModel">
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Gender">
+                            <input type="text" class="form-control shadow-none" placeholder="Designation of Employer" name="employer_desg" ngModel #employer_desg="ngModel">
                         </div>
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer">
+                        <div class="col-12 col-md-5">
+                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address" name="employer_addr" ngModel #employer_addr="ngModel">
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-primary">+</button>
+                            <button class="btn btn-primary" type="button" (click)="employerDetails('add', { employer_name: employer_name.value, employer_desg: employer_desg.value, employer_addr: employer_addr.value })">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Particulars of the members of the Employer's family employed in the Establishments as defined in Section 2(17)</label>
+                    <hr>
+                    @if(employer_family_member_details[0]){
+                        <ul class="list-group mb-3">
+                            @for(efmd of employer_family_member_details; track efmd){
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{{efmd.name}}</span>
+                                    <span>{{efmd.age}}</span>
+                                    <span>{{efmd.gender}}</span>
+                                    <span>{{efmd.relationship}}</span>
+                                    <span class="text-danger" (click)="employerFamilyMemberDetails('delete', { employer_family_name: efmd.name })" style="cursor: pointer">X</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name" name="employer_family_name" ngModel #employer_family_name="ngModel">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_family_age" ngModel #employer_family_age="ngModel">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Gender" name="employer_family_gender" ngModel #employer_family_gender="ngModel">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_family_rel" ngModel #employer_family_rel="ngModel">
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-primary" type="button" (click)="employerFamilyMemberDetails('add', { employer_family_name: employer_family_name.value, employer_family_age: employer_family_age.value, employer_family_gender: employer_family_gender.value, employer_family_rel: employer_family_rel.value})">+</button>
                         </div>
                     </div>
                 </div>
@@ -125,21 +188,34 @@
                 <div class="col-12">
                     <label>Name of the other person occupying the position of the Management or Employees engaged confidential capacity, if any</label>
                     <hr>
+                    @if(management_level_employee_details[0]){
+                        <ul class="list-group mb-3">
+                            @for(mled of management_level_employee_details; track mled){
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{{mled.name}}</span>
+                                    <span>{{mled.age}}</span>
+                                    <span>{{mled.gender}}</span>
+                                    <span>{{mled.relationship}}</span>
+                                    <span class="text-danger" (click)="managementEmployeeDetails('delete', { employer_management_name: mled.name })" style="cursor: pointer">X</span>
+                                </li>
+                            }
+                        </ul>
+                    }
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Full Name">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name" name="employer_management_name" ngModel #employer_management_name="ngModel">
                         </div>
                         <div class="col-12 col-md-2">
-                            <input type="text" class="form-control shadow-none" placeholder="Age">
+                            <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_management_age" ngModel #employer_management_age="ngModel">
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Gender">
+                            <input type="text" class="form-control shadow-none" placeholder="Gender" name="employer_management_gender" ngModel #employer_management_gender="ngModel">
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer">
+                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_management_rel" ngModel #employer_management_rel="ngModel">
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-primary">+</button>
+                            <button class="btn btn-primary" type="button" (click)="managementEmployeeDetails('add', { employer_management_name: employer_management_name.value, employer_management_age: employer_management_age.value, employer_management_gender: employer_management_gender.value, employer_management_rel: employer_management_rel.value})">+</button>
                         </div>
                     </div>
                 </div>
