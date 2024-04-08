@@ -35,3 +35,6 @@ backend/*.log
 backend.logs/
 *.log
 logs/
+frontend/.angular
+frontend/.vscode
+frontend/node_modules

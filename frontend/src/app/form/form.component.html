@@ -1,0 +1,222 @@
+<!-- <h4>Application Form</h4>
+<hr style="width: 10%"> -->
+<section class="form">
+    <form #details="ngForm" (ngSubmit)="submitForm(details)">
+        <div class="applying">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Applying To</h5>
+                <span class="text-danger">Note: Fields marked with (*) are mandatory</span>
+            </div>
+            <hr>
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Department</label>
+                    <input type="text" class="form-control shadow-none" value="Department of Labour" disabled>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">District<span class="text-danger">*</span></label>
+                    <select class="form-select shadow-none" name="district" ngModel #district="ngModel" required>
+                        <option value="">---Select District---</option>
+                        @for(d of districts; track d){
+                            <option [value]="d.id">{{ d.district_name }}</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Registration Type<span class="text-danger">*</span></label>
+                    <select class="form-select shadow-none" name="registration_type" ngModel #registration_type="ngModel" required>
+                        <option value="">---Select Registration Type---</option>
+                        <option value="New Registration">New Registration</option>
+                        <option value="Already Registered">Already Registered</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="details mt-3">
+            <h5>Application Details</h5>
+            <hr>
+            <div class="row g-3">
+                <div class="col-12 col-lg-3 col-md-4">
+                    <label class="form-label">Full Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" name="full_name" ngModel #full_name="ngModel" required>
+                </div>
+                <div class="col-12 col-lg-3 col-md-4">
+                    <label class="form-label">E-Mail<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" name="email" ngModel #email="ngModel" required>
+                </div>
+                <div class="col-12 col-lg-3 col-md-4">
+                    <label class="form-label">Establishments Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" name="establishment_name" ngModel #establishment_name="ngModel" required>
+                </div>
+                <div class="col-12 col-lg-3 col-md-4">
+                    <label class="form-label">Applicants Photograph<span class="text-danger">*</span></label>
+                    <input type="file" class="form-control shadow-none" (change)="photoUpload($event)" name="photo" ngModel #photo="ngModel" required>
+                </div>
+            </div>
+            <div class="row g-3 mt-2">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Full postal address and location of the establishment<span class="text-danger">*</span></label>
+                    <textarea class="form-control shadow-none" cols="2" rows="5" name="address" ngModel #address="ngModel" required></textarea>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Situation of Office, storeroom, Godown, warehouse or workplace. If any attached to the establishment but situated in the premises different from those of the Establishment<span class="text-danger">*</span></label>
+                    <textarea class="form-control shadow-none" cols="2" rows="5" name="situation" ngModel #situation="ngModel" required></textarea>
+                </div>
+            </div>
+            <div class="row g-3 mt-2">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Category of Establishment<span class="text-danger">*</span></label>
+                    <select class="form-select shadow-none" name="establishment_category" ngModel #establishment_category="ngModel" required>
+                        <option value="">---Select Category of Establishment---</option>
+                        @for(e of establishments; track e){
+                            <option [value]="e.id">{{ e.category }}</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Nature of Business<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" name="nature_of_business" ngModel #nature_of_business="ngModel" required>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Name, Designation and Permanent Address of the Employer</label>
+                    <hr>
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name of Employer">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Designation of Employer">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address">
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-primary">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Particulars of the members of the Employer's family employed in the Establishments as defined in Section 2(17)</label>
+                    <hr>
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <input type="text" class="form-control shadow-none" placeholder="Age">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Gender">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer">
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-primary">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Name of the other person occupying the position of the Management or Employees engaged confidential capacity, if any</label>
+                    <hr>
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <input type="text" class="form-control shadow-none" placeholder="Age">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Gender">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer">
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-primary">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Total Number of Employees<span class="text-danger">*</span></label>
+                    <hr>
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Adult (18 years and above)" name="old" ngModel #old="ngModel" required>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Male" name="old_male" ngModel #old_male="ngModel" required>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" ngModel #old_female="ngModel" required>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Total" name="old_total" ngModel #old_total="ngModel" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Total Number of Employees<span class="text-danger">*</span></label>
+                    <hr>
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Young Person (14-17 years of age)" name="young" ngModel #young="ngModel" required>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Male" name="young_male" ngModel #young_male="ngModel" required>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Female" name="young_female" ngModel #young_female="ngModel" required>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Total" name="young_total" ngModel #young_total="ngModel" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label class="form-label">Name of the day of the week on which weekly holidays will be observed; as per relevant Notification (in case of Shop and Commercial Establishments only)</label>
+                    <input type="text" class="form-control shadow-none" name="weekly_holidays" ngModel #weekly_holidays="ngModel">
+                </div>
+            </div>
+        </div>
+        <div class="declaration mt-3">
+            <h5>Declaration</h5>
+            <hr>
+            <p>I hereby solemnly affirm and declare that to the best of my knowledge and belief.</p>
+            <p>I am a citizen of India.</p>
+            <p>I have not concealed or suppressed any information, the disclosure of which would make me disentitled for this Certificate.</p>
+            <p>I shall be held responsible for any misrepresentation or false information given by me while applying for this Certificate.</p>
+            <input type="checkbox" (click)="getCheck($event)">&nbsp;&nbsp;&nbsp;I Agree
+        </div>
+        <div class="additional mt-3">
+            <h5>Additional Details</h5>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label class="form-label">Applied to Office<span class="text-danger">*</span></label>
+                    <select class="form-select" name="office" ngModel #office="ngModel" required>
+                        <option value="">---Select Office---</option>
+                        @for(o of offices; track o){
+                            <option [value]="o.id">{{ o.address }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="controls mt-3 mb-5 text-end">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</section>
