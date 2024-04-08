@@ -10,3 +10,7 @@ urlpatterns = [
     path('application/establishment/list', op_views.ApplicationForCertificateOfEstablishmentList.as_view()),
     path('application/establishment/<int:pk>', op_views.ApplicationForCertificateOfEstablishmentDetails.as_view())
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static('/media/', document_root=settings.MEDIA_ROOT)

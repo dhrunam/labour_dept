@@ -45,12 +45,14 @@ class EmployerFamilyMemberDetails(models.Model):
     application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_family_member")
     name = models.CharField(max_length =128, null=False)
     age =  models.DecimalField(max_digits=5, decimal_places=2 )
+    gender = models.CharField(max_length =10, null=False)
     relationship = models.CharField(max_length =128, null=False)
 
 class ManagementLevelEmployeeDetails(models.Model):
     application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "management_level_employee")
     name = models.CharField(max_length =128, null=False)
     age =  models.DecimalField(max_digits=5, decimal_places=2 )
+    gender = models.CharField(max_length =10, null=False)
     relationship = models.CharField(max_length =128, null=False)
 
 
