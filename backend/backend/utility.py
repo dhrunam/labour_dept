@@ -1,5 +1,8 @@
 from datetime import datetime
 import time
+import requests
+from django.core.mail import send_mail
+
 
 
 def generate_id_for_file_name(self, prepend):
@@ -13,13 +16,38 @@ def generate_id_for_file_name(self, prepend):
 
 
 def file_upload_handler(self, request):
-        file_number = generate_id_for_file_name(self, "applicant_photo")
-        if 'photograph_applicant' in request.FILES:
-            file_name_parts = request.data['photograph_applicant'].name.split(
+        file_number = generate_id_for_file_name(self, "id")
+        if 'id_proof' in request.FILES:
+            file_name_parts = request.data['id_proof'].name.split(
                         '.')
             if len(file_name_parts) > 1:
-                        request.data['photograph_applicant'].name = file_number + '.'+file_name_parts[len(file_name_parts)-1]
+                        request.data['id_proof'].name = file_number + '.'+file_name_parts[len(file_name_parts)-1]
 
               
         return request
+
+def send_sms(to_mobile_number, template_id, message):
+
+    username = ''
+    pin = ''
+    signature = ''
+    entity_id = ''
+    # template_id = sms_template[template_name]['template_id']
+    # message = sms_template[template_name]['message']
+    #template_id = '1107165390653742984'
+    print("message", message)
+    try:
+        url = ""+username+"&pin="+pin+"&message="+message+"&mnumber="+to_mobile_number+"&signature="+signature+"&dlt_entity_id="+entity_id+"&dlt_template_id="+template_id
+        requests.get(url, verify=False)
+        print('Message Sent')
+        return None
+    except Exception as e:
+        print(e)
+
+def send_emil_from_app(self, request):
+        subject = 'Subject here'
+        message = 'Here is the message.'
+        from_email = 'your_email@gmail.com'
+        recipient_list = ['recipient@example.com']
+        send_mail(subject, message, from_email, recipient_list)
 

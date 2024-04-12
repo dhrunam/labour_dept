@@ -2,7 +2,8 @@ from rest_framework import  generics, response, status
 from operation import models as op_models, serializers as op_serializer
 from django.db import transaction, connection
 from backend.utility import file_upload_handler
-import json
+from django.conf  import settings
+import json, datetime
 
 
 class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
@@ -13,6 +14,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data._mutable = True
         request = file_upload_handler(self,request)
+        request.data['applied_by'] = self.request.user.id
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
@@ -70,3 +72,13 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
 class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPIView):
     queryset = op_models.ApplicationForCertificateOfEstablishment
     serializer_class = op_serializer.ApplicationForCertificateOfEstablishmentSerializer
+    user_roles=settings.USER_ROLES
+    def put(self, request, *args, **kwargs):
+        request.data._mutable = True
+        application_status = request.data.get('application_status')
+        user_group = self.request.user.groups.all()
+        if user_group.filter(name=self.user_roles['dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['approved']:
+            request.data['approved_by'] = self.request.user.id
+            request.data['approved_at'] = datetime.datetime.now()
+        request.data._mutable = False
+        return super().put(request, *args, **kwargs)

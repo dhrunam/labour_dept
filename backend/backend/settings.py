@@ -180,15 +180,8 @@ REST_DURIN = {
 USER_ROLES = {
     "superadmin":"superadmin",
     "general_user":"general_user",
-    "rti_admin": "rti_admin",
-    "appellate_authority":"appellate_authority",
-    "grievance_general":"grievance_general",
-    "grievance_sh":"grievance_sh",
-    "grievance_sh_staff":"grievance_sh_staff",
-    "grievance_sh_judicial":"grievance_sh_judicial",
-    "advocate": "advocate",
-    "dc_jjb":"dc_jjb", #District Court Juvenile Justice Board
-    "hc_jjb":"hc_jjb", #High Court Juvenile Justice Board
+    "dept_admin": "dept_admin",
+   
 }
 
 
@@ -197,12 +190,14 @@ INTIMATION_TYPE = {
     "REPLY_INTIMATION":'reply_intimation',
 }
 
-RTI_APPLICATION_STATUS={
+APPLICATION_STATUS={
     "forwarded":"forwarded",
     "received":"received",
     "rejected":"rejected",
-    "completed":"completed",
     "pending" : "pending",
+    "approved" : "approved",
+    "completed":"completed",
+
 }
 PG_PARAMS={}
 

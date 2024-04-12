@@ -15,5 +15,5 @@ class UserProfile(models.Model):
     is_deleted = models.BooleanField(default=None, null=False)
 
 class UserOTP(models.Model):
-    contact = models.CharField(max_length=10, default=None, null=False, unique=True)
+    contact = models.CharField(max_length=50, default=None, null=False, unique=True)
     otp = models.CharField(max_length=6, default=None, null=False)
