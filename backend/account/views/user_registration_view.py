@@ -49,12 +49,12 @@ class UserCreate(generics.CreateAPIView):
 
             request = file_upload_handler(self, request)
             user = User.objects.create(
-                        username=self.request.data['email'],
-                        is_staff=True if self.request.data['group'] == 'general_user' else False,
+                        username=self.request.data.get('email'),
+                        is_staff=True if self.request.data.get('group') == settings.USER_ROLES['general_user'] else False,
                     )
             user.groups.add(Group.objects.get(
-                        name=self.request.data['group']))
-            user.set_password(self.request.data['password'])
+                        name=self.request.data.get('group')))
+            user.set_password(self.request.data.get('password'))
             user.save()
 
             user_profile = acc_models.UserProfile.objects.update_or_create(
@@ -72,6 +72,7 @@ class UserCreate(generics.CreateAPIView):
             )
             return response.Response("User created sucessfully", status=status.HTTP_201_CREATED)
         except Exception as e:
+            print(e)
             return response.Response("Some error occured. Please try again", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
    
@@ -202,8 +203,8 @@ class UserUpdateByAdmin(generics.UpdateAPIView):
     user_roles=settings.USER_ROLES
     def put(self, request, *args, **kwargs):
         instance = self.get_object() 
-        user_name= request.user.username
-        user_group = request.user.groups.all()
+        user_name= self.request.user.username
+        user_group = self.request.user.groups.all()
         
         if self.request.data.get('group'):
             group_id_array=json.loads(self.request.data.get('group'))

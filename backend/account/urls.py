@@ -4,7 +4,8 @@ from django.conf.urls.static import static
 from account import views as acc_views
 
 urlpatterns = [
-     path('otp', acc_views.UserOtpList.as_view()),
+    path('otp', acc_views.UserOtpList.as_view()),
+    path('otp/validate', acc_views.OtpVerification.as_view()),
     path('otp/forgotpassword', acc_views.OtpForForgetPassword.as_view()),
     path('user/register', acc_views.UserCreate.as_view()),
     path('admin/user/register', acc_views.UserCreateFromAdmin.as_view()),
@@ -16,5 +17,5 @@ urlpatterns = [
     path('user/forgotpassword/change',acc_views.UserForgotPasswordChange.as_view()),
     path('group', acc_views.GroupList.as_view()),
     path('group/<int:pk>', acc_views.GroupDetails.as_view()),
-     path('auth/',include('durin.urls')),
+    path('auth/',include('durin.urls')),
 ]

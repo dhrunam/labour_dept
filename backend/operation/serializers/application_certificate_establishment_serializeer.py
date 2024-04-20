@@ -15,7 +15,7 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
     related_employer_family_member_details = op_serializer.EmployerFamilyMemberDetailsSerializer(source = 'employer_family_member',many=True, read_only=True)
 
     related_management_level_employee_details = op_serializer.ManagementLevelEmployeeDetailsSerializer(source = 'management_level_employee',many=True, read_only=True)
-     
+    related_application_progress_history = op_serializer.ApplicationProgressHistorySerializer(source="application_progress_history", many=True, read_only=True)
     class Meta:
           model = op_models.ApplicationForCertificateOfEstablishment
           fields = (
@@ -52,5 +52,6 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
                     'related_employer_details',
                     'related_employer_family_member_details',
                     'related_management_level_employee_details',
+                    'related_application_progress_history',
 
                     )

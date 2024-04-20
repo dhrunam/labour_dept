@@ -64,6 +64,11 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
                         relationship =data['relationship']
 
                 )
+        
+        op_models.ApplicationProgressHistory.objects.create(
+                application_certificate_establishment = instance,
+        )
+        
         request.data._mutable = False
 
         return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

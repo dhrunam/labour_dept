@@ -35,12 +35,12 @@ class ApplicationForCertificateOfEstablishment(models.Model):
     approved_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="appr_for_certificate_est")
 
 class ApplicationProgressHistory(models.Model):
-    application = models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete=models.SET_NULL, null=True, related_name='application_progress_history')
+    application_certificate_establishment = models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete=models.SET_NULL, null=True, related_name='application_progress_history')
     initiated_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="application_progress_history")
     remarks = models.CharField()
     application_status = models.CharField(max_length=128, null=False, default=settings.APPLICATION_STATUS["received"])
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
 class EmployerParentageDetails(models.Model):
     application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_parentel_details")
     parentage_name = models.CharField(max_length =256, null=False)

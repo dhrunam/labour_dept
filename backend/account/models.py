@@ -17,3 +17,4 @@ class UserProfile(models.Model):
 class UserOTP(models.Model):
     contact = models.CharField(max_length=50, default=None, null=False, unique=True)
     otp = models.CharField(max_length=6, default=None, null=False)
+    opt_date_time = models.DateTimeField(auto_now=True)

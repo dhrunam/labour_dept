@@ -33,24 +33,26 @@ def GenerateSendOTP( contact, otp_for ):
     
     return sent
 
-def VerifyEmailOTPForUserRegistration(contact, otp, user_type):
-    check = User.objects.filter(username=contact).last()
-    if(check):
-        acc_models.UserOTP.objects.filter(contact=contact).delete()
-        return False
-    else:
-        get_otp = acc_models.UserOTP.objects.filter(contact=contact).last()
-        if get_otp:
-            time_difference = datetime.now().astimezone() - get_otp.opt_date_time
-            if time_difference >= timedelta(minutes=15):
-                return False
-            if otp == get_otp.otp:
+def VerifyEmailOTPForUserRegistration(contact, otp, user_type=''):
+    # check = User.objects.filter(username=contact).last()
+    # if(check):
+    #     acc_models.UserOTP.objects.filter(contact=contact).delete()
+    #     return False
+
+    get_otp = acc_models.UserOTP.objects.filter(contact=contact).last()
+    if get_otp:
+        time_difference = datetime.now().astimezone() - get_otp.opt_date_time
+        print('time_difference',time_difference)
+        if time_difference >= timedelta(minutes=15):
+            get_otp.delete()
+            return False
+        if otp == get_otp.otp:
                 get_otp.delete()
                 return True
                     
-            else:
-                return False
         else:
+                return False
+    else:
             return False
 
 def VerifyPhoneNumberOTPForUserRegistration(contact, otp):
@@ -58,7 +60,8 @@ def VerifyPhoneNumberOTPForUserRegistration(contact, otp):
         if get_otp:
             time_difference = datetime.now().astimezone() - get_otp.opt_date_time
             if time_difference >= timedelta(minutes=15):
-                return response.Response("OTP Expired", status=status.HTTP_400_BAD_REQUEST)
+                # return response.Response("OTP Expired", status=status.HTTP_400_BAD_REQUEST)
+                return False
             if otp == get_otp.otp:
                 get_otp.delete()
                 return True
@@ -83,12 +86,15 @@ class UserOtpList(generics.ListCreateAPIView):
         try:
             contact = request.data.get('contact')
             email = request.data.get('email')
-            if contact:
-                contact = re.sub('[^0-9]+', '', contact)
-            else:
-                return response.Response("Contact number required.", status=status.HTTP_404_NOT_FOUND)
-
             otp = request.data.get('otp')
+            phone_otp_verification=False
+            email_otp_verification=False
+
+            
+            # else:
+            #     return response.Response("Contact number required.", status=status.HTTP_404_NOT_FOUND)
+
+          
             if otp:
                  otp = re.sub('[^0-9]+', '', otp)
             elif contact:
@@ -97,20 +103,11 @@ class UserOtpList(generics.ListCreateAPIView):
                 sent_email_otp = GenerateSendOTP(email,'email')
             
             if sent_phone_otp:
-                return response.Response("Otp send successfully to phone number..", status==status.HTTP_200_OK)
+                return response.Response("Otp send successfully to phone number..", status=status.HTTP_200_OK)
             if sent_email_otp:
-                return response.Response("Otp send successfully to email..", status==status.HTTP_200_OK)
+                return response.Response("Otp send successfully to email..", status=status.HTTP_200_OK)
            
-            if contact and otp:
-               
-                phone_otp_verification = VerifyPhoneNumberOTPForUserRegistration(contact,otp)
 
-            if email and otp:
-                email_otp_verification = VerifyEmailOTPForUserRegistration(email,otp)
-            
-            if phone_otp_verification and email_otp_verification:
-                
-                return response.Response("Otp varified successfully", status==status.HTTP_200_OK)
             
 
         except Exception as e:
@@ -136,6 +133,69 @@ class UserOtpList(generics.ListCreateAPIView):
     #         return response.Response("Incorrect OTP or OTP expired..", status=status.HTTP_403_FORBIDDEN)
 
 # @method_decorator(csrf_protect, name='dispatch')
+
+class OtpVerification(generics.CreateAPIView):
+    queryset=acc_models.UserOTP.objects.all().order_by('-id')
+    serializer_class = acc_serializers.UserOTPSerializer
+    def post(self, request, *args, **kwargs):
+
+        phone_otp_verification = False
+        email_otp_verification = False
+        sent_email_otp = False
+        sent_phone_otp = False
+        try:
+            contact = request.data.get('contact')
+            email = request.data.get('email')
+            otp = request.data.get('otp')
+            phone_otp_verification=False
+            email_otp_verification=False
+            print(email,otp)
+
+            if contact and otp:
+               
+                phone_otp_verification = VerifyPhoneNumberOTPForUserRegistration(contact,otp)
+
+            if email and otp:
+                print("email otp verfication")
+                email_otp_verification = VerifyEmailOTPForUserRegistration(email,otp)
+            
+
+            if phone_otp_verification:
+                
+                return response.Response("Otp for phone varified successfully", status=status.HTTP_200_OK)
+
+            elif email_otp_verification:
+                
+                return response.Response("Otp for email varified successfully", status=status.HTTP_200_OK)
+           
+            else :
+                return response.Response("Otp verfication failed", status=status.HTTP_200_OK)
+            # else:
+            #     return response.Response("Contact number required.", status=status.HTTP_404_NOT_FOUND)
+
+          
+            if otp:
+                 otp = re.sub('[^0-9]+', '', otp)
+            elif contact:
+                sent_phone_otp = GenerateSendOTP(contact,'phone_number')
+            elif email:
+                sent_email_otp = GenerateSendOTP(email,'email')
+            
+            if sent_phone_otp:
+                return response.Response("Otp send successfully to phone number..", status==status.HTTP_200_OK)
+            if sent_email_otp:
+                return response.Response("Otp send successfully to email..", status==status.HTTP_200_OK)
+           
+
+            
+
+        except Exception as e:
+            print(e)
+         
+            return response.Response("Some error occured. Please try again..", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
 class OtpForForgetPassword(generics.ListCreateAPIView):
     queryset = acc_models.UserOTP
     serializer_class = acc_serializers.UserOTPSerializer
