@@ -4,11 +4,24 @@ from django.db import transaction, connection
 from backend.utility import file_upload_handler
 from django.conf  import settings
 import json, datetime
+from account import models as acc_models
 
 
 class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     queryset = op_models.ApplicationForCertificateOfEstablishment.objects.all().order_by('-id')
     serializer_class = op_serializer.ApplicationForCertificateOfEstablishmentSerializer
+
+    def get_queryset(self):
+            
+        if self.request.user.groups.filter(name=settings.USER_ROLES["general_user"]).exists():
+           return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_by=self.request.user.id).order_by('-id')
+
+        if self.request.user.groups.filter(name=settings.USER_ROLES["dept_admin"]).exists():
+            user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
+            if user_profile:
+                return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization).order_by('-id')
+
+        return []
 
     @transaction.atomic()
     def post(self, request, *args, **kwargs):
@@ -19,9 +32,6 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
         headers = self.get_success_headers(serializer.data)
-        
-
-
         employer_parentage_details=json.loads(request.data.get('employer_parentage_details'))
         if employer_parentage_details and instance:
             for data in employer_parentage_details:

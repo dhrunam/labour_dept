@@ -12,7 +12,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'organization',
-            'name',
+            # 'name',
             'contact_number',
             'email',
             'gender',
