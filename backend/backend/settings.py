@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',
+    'https://labour.diseso.com'
 
 ]
 CORS_ORIGIN_ALLOW_ALL = False
@@ -97,8 +98,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'labour_dept_db',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'PASSWORD': 'Hotel@555',
+        'HOST': '154.49.243.185', 
         'PORT': '5432'
     }
 }
