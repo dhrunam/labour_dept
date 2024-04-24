@@ -60,7 +60,7 @@ class UserCreate(generics.CreateAPIView):
             user_profile = acc_models.UserProfile.objects.update_or_create(
                         user=user,
                         defaults={
-                            "name": request.data['name'],
+                            # "name": request.data['name'],
                             "contact_number": request.data.get('contact_number'),
                             "email": request.data.get('email'),
                             "gender": request.data.get('gender', ''),
@@ -102,7 +102,7 @@ class UserCreateFromAdmin(generics.CreateAPIView):
         user_profile = acc_models.UserProfile.objects.update_or_create(
                     user=user,
                     defaults={
-                        "name": request.data['name'],
+                        # "name": request.data['name'],
                         "contact_number": request.data.get('contact_number'),
                         "email": request.data.get('email'),
                         "gender": request.data.get('gender', ''),
