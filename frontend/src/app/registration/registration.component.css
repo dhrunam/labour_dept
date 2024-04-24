@@ -20,7 +20,8 @@ label{
     background-color: #179AFF;
     border-color: #179AFF;
 }
-input.ng-invalid.ng-touched{
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched{
     border-color: red;
 }
 input, select{

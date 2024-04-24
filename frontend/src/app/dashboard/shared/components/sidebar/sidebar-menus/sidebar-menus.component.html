@@ -5,6 +5,18 @@
             <span>Dashboard</span>
         </label>
     </li>
+    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/apply" (click)="onToggleKey('home')">
+        <label>
+            <i class="bi bi-award-fill"></i>
+            <span>Apply</span>
+        </label>
+    </li>
+    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/applications" (click)="onToggleKey('home')">
+        <label>
+            <i class="bi bi-folder"></i>
+            <span>My Applications</span>
+        </label>
+    </li>
     <!-- <li class="menu-item d" *ngIf="subMenuSorting && subMenuSorting.showMasterAdmin">
         <div class="icon-links" (click)="onToggle(elem1,elem2, 'masters')">
             <label>
@@ -221,12 +233,12 @@
             <span>My Cases</span>
         </label>
     </li> -->
-    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/profile"  (click)="onToggleKey('profile')">
+    <!-- <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/profile"  (click)="onToggleKey('profile')">
         <label>
             <i class="bi bi-person-badge"></i>
             <span>Profile</span>
         </label>
-    </li>
+    </li> -->
     <!-- <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/masters/logs"  (click)="onToggleKey('logs')" *ngIf="subMenuSorting.showMasterAdmin">
         <label>
             <i class="bi bi-hdd-stack"></i>

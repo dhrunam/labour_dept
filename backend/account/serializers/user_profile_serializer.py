@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import hashers
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    related_office = mst_serializer.OfficeDetailsSerializer(source="organization",many=False, read_only=True)
+    # related_office = mst_serializer.OfficeDetailsSerializer(source="organization",many=False, read_only=True)
     class Meta:
         model = acc_model.UserProfile
         fields = (

@@ -48,6 +48,7 @@ class UserCreate(generics.CreateAPIView):
         try:
 
             request = file_upload_handler(self, request)
+            print(request.data.get('group'))
             user = User.objects.create(
                         username=self.request.data.get('email'),
                         is_staff=True if self.request.data.get('group') == settings.USER_ROLES['general_user'] else False,

@@ -98,8 +98,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'labour_dept_db',
         'USER': 'postgres',
-        'PASSWORD': 'Hotel@555',
-        'HOST': '154.49.243.185', 
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost', 
         'PORT': '5432'
     }
 }
@@ -166,7 +166,7 @@ REST_FRAMEWORK = {
 REST_DURIN = {
         "DEFAULT_TOKEN_TTL": timedelta(days=1),
         "TOKEN_CHARACTER_LENGTH": 64,
-        "USER_SERIALIZER": 'accounts.serializers.UserSerializer',
+        "USER_SERIALIZER": 'account.serializers.UserSerializer',
         "AUTH_HEADER_PREFIX": "Token",
         "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
         "TOKEN_CACHE_TIMEOUT": 60,
@@ -182,7 +182,6 @@ USER_ROLES = {
     "superadmin":"superadmin",
     "general_user":"general_user",
     "dept_admin": "dept_admin",
-   
 }
 
 

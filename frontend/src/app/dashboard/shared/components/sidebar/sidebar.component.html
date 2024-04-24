@@ -5,7 +5,7 @@
                 <img src="assets/images/sikkim.png" class="mt-4" height="100">
             </div>
         </div>
-        <hr style="color: white">
+        <hr>
         <i [ngClass]="{'bi bi-x-lg': mobileActive, 'bi bi-list': !mobileActive}" [ngStyle]="{'font-size': mobileActive ? '20px' : '32px'}" id="btn" (click)="onToggle()"></i>
         <div *ngIf="!mobileActive; else mobileDeactive">
             <app-sidebar-menus [toggleValue]="toggleValue"></app-sidebar-menus>
