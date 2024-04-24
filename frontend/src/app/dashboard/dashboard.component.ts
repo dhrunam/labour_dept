@@ -6,7 +6,9 @@ import { Component } from "@angular/core";
             <app-sidebar></app-sidebar>
             <div class="d-block w-100">
                 <app-header></app-header>
-                <router-outlet></router-outlet>
+                <div class="px-5">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
         </div>
     `,

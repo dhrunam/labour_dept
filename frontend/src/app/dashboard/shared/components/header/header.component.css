@@ -1,0 +1,10 @@
+.sidebar-toggle{
+    visibility: hidden;
+    font-size: 32px;
+    cursor: pointer;
+}
+@media(max-width: 1136px){
+    .sidebar-toggle{
+        visibility: visible;
+    }
+}

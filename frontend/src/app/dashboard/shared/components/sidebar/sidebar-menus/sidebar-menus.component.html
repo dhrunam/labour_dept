@@ -1,1 +1,236 @@
-<p>sidebar-menus works!</p>
+<ul class="menu" [ngClass]="{'close': toggleValue, '': !toggleValue}">
+    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/home" (click)="onToggleKey('home')">
+        <label>
+            <i class="bi bi-pc-display-horizontal"></i>
+            <span>Dashboard</span>
+        </label>
+    </li>
+    <!-- <li class="menu-item d" *ngIf="subMenuSorting && subMenuSorting.showMasterAdmin">
+        <div class="icon-links" (click)="onToggle(elem1,elem2, 'masters')">
+            <label>
+                <i class="bi bi-columns"></i>
+                <span>Masters</span>
+            </label>
+            <i class="bi bi-chevron-right arrow mx-3" #elem1 [ngClass]="{'open': toggleKey === 'masters', '': toggleKey !== 'masters' && subMenuToggle}"></i>
+        </div>
+        <ul class="sub-menu" #elem2 [ngClass]="{'active': toggleKey === 'masters', '': toggleKey !== 'masters' && subMenuToggle}">
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/masters/organization" (click)="onToggleKey('masters')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Organizations</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/masters/user" (click)="onToggleKey('masters')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>User</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/masters/grievances-type" (click)="onToggleKey('masters')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Grievances Type</span>
+                </label>
+            </li>
+        </ul>
+    </li>
+    <li class="menu-item" *ngIf="subMenuSorting && (subMenuSorting.showGeneralUser || subMenuSorting.showRTIAdmin || subMenuSorting.showAppellateAutority || subMenuSorting.showAdvocate)">
+        <div class="icon-links" (click)="onToggle(elem3,elem4, 'rti')">
+            <label>
+                <i class="bi bi-info-square"></i>
+                <span>RTI</span>
+            </label>
+            <i class="bi bi-chevron-right arrow mx-3" #elem3 [ngClass]="{'open': toggleKey === 'rti', '': toggleKey !== 'rti' && subMenuToggle}"></i>
+        </div>
+        <ul class="sub-menu" #elem4 [ngClass]="{'active': toggleKey === 'rti', '': toggleKey !== 'rti' && subMenuToggle}">
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/apply" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showGeneralUser || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Apply RTI</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/my-applications" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showGeneralUser || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>My Applications</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/first-appeal" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showGeneralUser || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>First Appeal</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/fees" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showGeneralUser || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Pay Additional Fees</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/online-applications" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showRTIAdmin">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Online Applications</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/appeal-applications" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showAppellateAutority">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Appeal Applications</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/offline-applications" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showRTIAdmin">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Offline Applications</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/rti/forwarded-applications" (click)="onToggleKey('rti')" *ngIf="subMenuSorting.showRTIAdmin">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Forwarded Applications</span>
+                </label>
+            </li>
+        </ul>
+    </li>
+    <li class="menu-item" *ngIf="subMenuSorting && (subMenuSorting.showGeneralUser || subMenuSorting.showGrievancesAdmin || subMenuSorting.showAdvocate)">
+        <div class="icon-links" (click)="onToggle(elem5,elem6, 'grievance')">
+            <label>
+                <i class="bi bi-card-heading"></i>
+                <span>Grievance</span>
+            </label>
+            <i class="bi bi-chevron-right arrow mx-3" #elem5 [ngClass]="{'open': toggleKey === 'grievance', '': toggleKey !== 'grievance' && subMenuToggle}"></i>
+        </div>
+        <ul class="sub-menu" #elem6 [ngClass]="{'active': toggleKey === 'grievance', '': toggleKey !== 'grievance' && subMenuToggle}">
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/grievance/grievances" (click)="onToggleKey('grievance')" *ngIf="subMenuSorting.showGeneralUser || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Submit Grievance</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/grievance/grievance-applications" (click)="onToggleKey('grievance')" *ngIf="subMenuSorting.showGeneralUser || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>My Grievances</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/grievance/grievances-received" (click)="onToggleKey('grievance')" *ngIf="subMenuSorting.showGrievancesAdmin || subMenuSorting.showAdvocate">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Grievances</span>
+                </label>
+            </li>
+        </ul>
+    </li> -->
+    <!-- <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/jjb/dc"  (click)="onToggleKey('jjb')" *ngIf="subMenuSorting.showDCJJB">
+        <label>
+            <i class="bi bi-person-badge"></i>
+            <span>Justice Juvenile</span>
+        </label>
+    </li> -->
+    <!-- <li class="menu-item j" *ngIf="subMenuSorting && subMenuSorting.showHCJJB">
+        <div class="icon-links" (click)="onToggle(elem7,elem8, 'jjb')">
+            <label>
+                <i class="bi bi-info-square"></i>
+                <span>Justice Juvenile</span>
+            </label>
+            <i class="bi bi-chevron-right arrow mx-3" #elem7 [ngClass]="{'open': toggleKey === 'jjb', '': toggleKey !== 'jjb' && subMenuToggle}"></i>
+        </div>
+        <ul class="sub-menu" #elem8 [ngClass]="{'active': toggleKey === 'jjb', '': toggleKey !== 'jjb' && subMenuToggle}">
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/jjb/hc/detailed-report" (click)="onToggleKey('jjb')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Detailed Report</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/jjb/hc/summary-report" (click)="onToggleKey('jjb')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Summary Report</span>
+                </label>
+            </li>
+        </ul>
+    </li> -->
+    <!-- <li class="menu-item" *ngIf="subMenuSorting && (subMenuSorting.showGeneralUser || subMenuSorting.showCCAdmin)">
+        <div class="icon-links" (click)="onToggle(elem3,elem4, 'cc')">
+            <label>
+                <i class="bi bi-info-square"></i>
+                <span>Certified Copy</span>
+            </label>
+            <i class="bi bi-chevron-right arrow mx-3" #elem3 [ngClass]="{'open': toggleKey === 'cc', '': toggleKey !== 'cc' && subMenuToggle}"></i>
+        </div>
+        <ul class="sub-menu" #elem4 [ngClass]="{'active': toggleKey === 'cc', '': toggleKey !== 'cc' && subMenuToggle}">
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/certified-copy/apply" (click)="onToggleKey('cc')" *ngIf="subMenuSorting.showGeneralUser">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Apply</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/certified-copy/my-applications" (click)="onToggleKey('cc')" *ngIf="subMenuSorting.showGeneralUser">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>My Applications</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/certified-copy/my-cases" (click)="onToggleKey('cc')" *ngIf="subMenuSorting.showGeneralUser">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>My Cases</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/certified-copy/applications" (click)="onToggleKey('cc')" *ngIf="subMenuSorting.showCCAdmin">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Applications</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/certified-copy/history" (click)="onToggleKey('cc')" *ngIf="subMenuSorting.showCCAdmin">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>History</span>
+                </label>
+            </li>
+        </ul>
+    </li> -->
+    <!-- <li class="menu-item" *ngIf="subMenuSorting && (subMenuSorting.showPaperlessAdmin)">
+        <div class="icon-links" (click)="onToggle(elem9,elem10, 'paperless')">
+            <label>
+                <i class="bi bi-pc-display"></i>
+                <span>Paperless Court</span>
+            </label>
+            <i class="bi bi-chevron-right arrow mx-3" #elem9 [ngClass]="{'open': toggleKey === 'paperless', '': toggleKey !== 'paperless' && subMenuToggle}"></i>
+        </div>
+        <ul class="sub-menu" #elem10 [ngClass]="{'active': toggleKey === 'paperless', '': toggleKey !== 'paperless' && subMenuToggle}">
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/paperless/case-entry/view" (click)="onToggleKey('paperless')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Case Entry</span>
+                </label>
+            </li>
+            <li class="sub-menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/paperless/case-assign" (click)="onToggleKey('paperless')">
+                <label>
+                    <i class="bi bi-dash-circle-dotted"></i>
+                    <span>Assign Cases</span>
+                </label>
+            </li>
+        </ul>
+    </li> -->
+    <!-- <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/paperless/case-files" *ngIf="subMenuSorting && subMenuSorting.showAdvocate" (click)="onToggleKey('paperless')">
+        <label>
+            <i class="bi bi-person-badge"></i>
+            <span>My Cases</span>
+        </label>
+    </li> -->
+    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/profile"  (click)="onToggleKey('profile')">
+        <label>
+            <i class="bi bi-person-badge"></i>
+            <span>Profile</span>
+        </label>
+    </li>
+    <!-- <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/masters/logs"  (click)="onToggleKey('logs')" *ngIf="subMenuSorting.showMasterAdmin">
+        <label>
+            <i class="bi bi-hdd-stack"></i>
+            <span>Logs</span>
+        </label>
+    </li> -->
+</ul>
