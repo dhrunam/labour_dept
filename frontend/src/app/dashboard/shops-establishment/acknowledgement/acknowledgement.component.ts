@@ -9,5 +9,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './acknowledgement.component.css'
 })
 export class AcknowledgementComponent {
-
+  ngOnInit(): void{
+    window.scrollTo(0, 0);
+  }
 }

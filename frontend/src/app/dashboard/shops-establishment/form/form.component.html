@@ -177,7 +177,12 @@
                             <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_family_age" ngModel #employer_family_age="ngModel">
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Gender" name="employer_family_gender" ngModel #employer_family_gender="ngModel">
+                            <select class="form-control shadow-none" name="employer_family_gender" [ngModel]="''" #employer_family_gender="ngModel">
+                                <option value="">---Select Gender---</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
+                            </select>
                         </div>
                         <div class="col-12 col-md-3">
                             <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_family_rel" ngModel #employer_family_rel="ngModel">
@@ -213,7 +218,12 @@
                             <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_management_age" ngModel #employer_management_age="ngModel">
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Gender" name="employer_management_gender" ngModel #employer_management_gender="ngModel">
+                            <select class="form-control shadow-none" name="employer_management_gender" [ngModel]="''" #employer_management_gender="ngModel">
+                                <option value="">---Select Gender---</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
+                            </select>
                         </div>
                         <div class="col-12 col-md-3">
                             <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_management_rel" ngModel #employer_management_rel="ngModel">
@@ -293,7 +303,7 @@
             <button class="btn btn-primary" type="submit">
                 @if(loader){
                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                    <span role="status">Loading...</span>
+                    &nbsp;<span role="status">Loading...</span>
                 }
                 @else{
                     Submit

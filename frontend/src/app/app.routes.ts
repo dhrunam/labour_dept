@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/route/auth.guard';
+import { redirectGuard } from './guards/route/redirect.guard';
 
 export const routes: Routes = [
-    { path: '', loadComponent: () => import('./form/form.component').then(c => c.FormComponent ) },
-    { path: 'acknowledgement', loadComponent: () => import('./acknowledgement/acknowledgement.component').then(c => c.AcknowledgementComponent ) },
-    { path: 'applications', loadComponent: () => import('./applications/applications.component').then(c => c.ApplicationsComponent ) },
-    { path: 'details/:id', loadComponent: () => import('./details/details.component').then(c => c.DetailsComponent ) },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', loadComponent: () => import('./login/login.component').then(c => c.LoginComponent ), canActivate: [redirectGuard] },
+    { path: 'registration', loadComponent: () => import('./registration/registration.component').then(c => c.RegistrationComponent ) },
+    { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule ), canActivate: [authGuard] },
 ];

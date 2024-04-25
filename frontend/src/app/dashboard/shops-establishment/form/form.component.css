@@ -5,3 +5,7 @@ select.ng-invalid.ng-touched{
 .form-label, label{
     font-weight: bold;
 }
+.btn-primary{
+    background-color: #179AFF;
+    border-color: #179AFF;
+}

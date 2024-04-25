@@ -1,0 +1,53 @@
+<section class="vh-100 d-flex justify-content-center align-items-center" style="background-color: #fbfdfe;">
+    <div class="card w-50 p-4">
+        <div class="row card-body mb-5">
+            <div class="col-md-6 text-center">
+                <img src="assets/images/sikkim.png" height="170">
+                <h3 class="mt-3 tags"><strong>Department of Labour</strong></h3>
+                <h4 class="tags">Government of Sikkim</h4>
+            </div>
+            <div class="col-md-6 mt-1">
+                <h4 class="tags heading">Login</h4>
+                <hr style="width: 20%; border: 2px solid black">
+                <form #auth="ngForm" (ngSubmit)="onLogin(auth)">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <input type="text" class="form-control shadow-none" placeholder="Username" name="username" ngModel #username="ngModel" required>
+                            @if(username.touched && username.invalid){
+                                <span class="text-danger">Please enter username</span>
+                            }
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <input type="password" class="form-control shadow-none" placeholder="Password" name="password" ngModel #password="ngModel" required>
+                            @if(password.touched && password.invalid){
+                                <span class="text-danger">Please enter password</span>
+                            }
+                        </div>
+                        <!-- <div class="text-end mb-2">
+                            <label>Forgot Password ?</label>
+                        </div> -->
+                        @if(showError){
+                            <div class="mb-3">
+                                <label class="text-danger">Error: Invalid Credentials !!</label>
+                            </div>
+                        }
+                        <div class="mb-3">
+                            <button class="btn btn-primary w-100">
+                                @if(loader){
+                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                    &nbsp;<span role="status">Loading...</span>
+                                }
+                                @else{
+                                    Login
+                                }
+                            </button>
+                        </div>
+                        <div>
+                            <span class="heading">New User ? </span> <label routerLink="/registration" style="cursor: pointer;">Sign Up</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
