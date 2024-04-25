@@ -1,4 +1,4 @@
-from .application_progress_hiistory_serializer import *
+from .application_progress_history_serializer import *
 from .employer_parentage_details_serializer import *
 from .employer_details_serializer import *
 from .employer_family_member_details_serializer import *

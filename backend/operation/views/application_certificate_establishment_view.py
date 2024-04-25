@@ -12,6 +12,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     serializer_class = op_serializer.ApplicationForCertificateOfEstablishmentSerializer
 
     def get_queryset(self):
+        
             
         if self.request.user.groups.filter(name=settings.USER_ROLES["general_user"]).exists():
            return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_by=self.request.user.id).order_by('-id')
