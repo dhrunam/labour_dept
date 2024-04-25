@@ -197,6 +197,8 @@ APPLICATION_STATUS={
     "pending" : "pending",
     "approved" : "approved",
     "completed":"completed",
+    "t1-verfication":"T1-Verfication",
+    "t2-fee calculation":"T2-Fee Calculation"
 
 }
 PG_PARAMS={}

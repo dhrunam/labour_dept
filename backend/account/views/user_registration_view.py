@@ -51,6 +51,9 @@ class UserCreate(generics.CreateAPIView):
             print(request.data.get('group'))
             user = User.objects.create(
                         username=self.request.data.get('email'),
+                        email=self.request.data.get('email'),
+                        first_name=self.request.data.get('first_name'),
+                        last_name=self.request.data.get('last_name'),
                         is_staff=True if self.request.data.get('group') == settings.USER_ROLES['general_user'] else False,
                     )
             user.groups.add(Group.objects.get(
