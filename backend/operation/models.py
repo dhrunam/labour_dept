@@ -31,7 +31,7 @@ class ApplicationForCertificateOfEstablishment(models.Model):
     applied_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="appl_for_certificate_est")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    approved_at = models.DateTimeField(auto_now=False)
+    approved_at = models.DateTimeField(auto_now=False, null=True)
     approved_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="appr_for_certificate_est")
 
 class ApplicationProgressHistory(models.Model):

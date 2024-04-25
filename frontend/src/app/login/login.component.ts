@@ -11,12 +11,16 @@ import { AuthService } from './auth.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  showError: boolean = false;
+  loader: boolean = false;
   constructor(private authService: AuthService){}
   onLogin(data: NgForm){
     if(!data.valid){
       data.control.markAllAsTouched();
     }
     else{
+      this.showError = false;
+      this.loader = true;
       let fd = new FormData();
       fd.append('username', data.value.username);
       fd.append('password', data.value.password);
@@ -24,6 +28,11 @@ export class LoginComponent {
       this.authService.login(fd).subscribe({
         next: data => {
           window.location.href = '/dashboard';
+          this.loader = false;
+        },
+        error: err => {
+          this.loader = false;
+          this.showError = true;
         }
       })
     }

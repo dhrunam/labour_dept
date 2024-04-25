@@ -26,8 +26,21 @@
                         <!-- <div class="text-end mb-2">
                             <label>Forgot Password ?</label>
                         </div> -->
+                        @if(showError){
+                            <div class="mb-3">
+                                <label class="text-danger">Error: Invalid Credentials !!</label>
+                            </div>
+                        }
                         <div class="mb-3">
-                            <button class="btn btn-primary w-100">Login</button>
+                            <button class="btn btn-primary w-100">
+                                @if(loader){
+                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                    &nbsp;<span role="status">Loading...</span>
+                                }
+                                @else{
+                                    Login
+                                }
+                            </button>
                         </div>
                         <div>
                             <span class="heading">New User ? </span> <label routerLink="/registration" style="cursor: pointer;">Sign Up</label>

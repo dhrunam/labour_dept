@@ -173,7 +173,7 @@ export class FormComponent {
       this.formService.submit_application(fd).subscribe({
         next: data => {
           this.loader = false;
-          this.router.navigate(['/acknowledgement']);
+          this.router.navigate(['/dashboard/shops-establishment/acknowledgement']);
         }
       })
     }

@@ -15,7 +15,6 @@ export class ApplicationsComponent {
   ngOnInit(): void{
     this.applicationService.get_applications().subscribe({
       next: data => {
-        console.log(data);
         this.applications = data.results;
       }
     })

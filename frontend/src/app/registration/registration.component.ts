@@ -1,21 +1,25 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RegistrationService } from './registration.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
+  loader: boolean = false;
+  showAck: boolean = false;
   constructor(private registrationService: RegistrationService){}
   onRegistration(data: NgForm){
     if(!data.valid){
       data.control.markAllAsTouched();
     }
     else{
+      this.loader = true;
       let fd = new FormData();
       fd.append('first_name', data.value.first_name);
       fd.append('last_name', data.value.last_name);
@@ -28,7 +32,8 @@ export class RegistrationComponent {
       fd.append('username', data.value.username);
       this.registrationService.register_user(fd).subscribe({
         next: data => {
-          window.location.href = '/'
+          this.loader = false
+          this.showAck = true;
         }
       })
     }
