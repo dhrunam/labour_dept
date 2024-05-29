@@ -5,18 +5,28 @@
             <span>Dashboard</span>
         </label>
     </li>
-    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/apply" (click)="onToggleKey('home')">
-        <label>
-            <i class="bi bi-award-fill"></i>
-            <span>Apply</span>
-        </label>
-    </li>
-    <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/applications" (click)="onToggleKey('home')">
-        <label>
-            <i class="bi bi-folder"></i>
-            <span>My Applications</span>
-        </label>
-    </li>
+    @if(subMenuSorting && subMenuSorting.showSuperAdmin){
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/users" (click)="onToggleKey('users')">
+            <label>
+                <i class="bi bi-people"></i>
+                <span>Users</span>
+            </label>
+        </li>
+    }
+    @if(subMenuSorting && subMenuSorting.showLevel1Admin){
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/apply" (click)="onToggleKey('home')">
+            <label>
+                <i class="bi bi-award-fill"></i>
+                <span>Apply</span>
+            </label>
+        </li>
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/applications" (click)="onToggleKey('home')">
+            <label>
+                <i class="bi bi-folder"></i>
+                <span>My Applications</span>
+            </label>
+        </li>
+    }
     <!-- <li class="menu-item d" *ngIf="subMenuSorting && subMenuSorting.showMasterAdmin">
         <div class="icon-links" (click)="onToggle(elem1,elem2, 'masters')">
             <label>

@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RegistrationService } from './registration.service';
-import { RouterModule } from '@angular/router';
+import { UsersService } from '../users.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-registration',
+  selector: 'app-edit',
   standalone: true,
-  imports: [FormsModule, RouterModule],
-  templateUrl: './registration.component.html',
-  styleUrl: './registration.component.css'
+  imports: [FormsModule],
+  templateUrl: './edit.component.html',
+  styleUrl: './edit.component.css'
 })
-export class RegistrationComponent {
+export class EditComponent {
   loader: boolean = false;
-  showAck: boolean = false;
-  constructor(private registrationService: RegistrationService){}
+  constructor(private usersSerivce: UsersService, private router: Router){}
   onRegistration(data: NgForm){
     if(!data.valid){
       data.control.markAllAsTouched();
@@ -30,10 +29,10 @@ export class RegistrationComponent {
       fd.append('group', 'general_user');
       fd.append('is_deleted', 'False');
       fd.append('username', data.value.username);
-      this.registrationService.register_user(fd).subscribe({
+      this.usersSerivce.register_user(fd).subscribe({
         next: data => {
-          this.loader = false
-          this.showAck = true;
+          this.loader = false;
+          this.router.navigate(['/dashboard/users/view'])
         }
       })
     }
