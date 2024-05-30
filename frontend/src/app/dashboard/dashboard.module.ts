@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: '', component: DashboardComponent,
     children: [
       { path: 'home', loadComponent: () => import('./home/home.component').then(c => c.HomeComponent ) },
+      { path: 'users', loadChildren: () => import('./users/users.route').then(r => r.routes ) },
       { path: 'shops-establishment', loadChildren: () => import('./shops-establishment/shops-establishment.module').then(m => m.ShopsEstablishmentModule ) },
     ]
   }
