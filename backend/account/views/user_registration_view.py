@@ -54,7 +54,7 @@ class UserCreate(generics.CreateAPIView):
                         email=self.request.data.get('email'),
                         first_name=self.request.data.get('first_name'),
                         last_name=self.request.data.get('last_name'),
-                        is_staff=True if self.request.data.get('group') == settings.USER_ROLES['general_user'] else False,
+                        is_staff=False if self.request.data.get('group') == settings.USER_ROLES['general_user'] else True,
                     )
             user.groups.add(Group.objects.get(
                         name=self.request.data.get('group')))
@@ -90,8 +90,11 @@ class UserCreateFromAdmin(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         request = file_upload_handler(self, request)
         user = User.objects.create(
-                    username=self.request.data['username'],
-                    is_staff=True if self.request.data['group'] == 'general_user' else False,
+                        username=self.request.data.get('username'),
+                        email=self.request.data.get('email'),
+                        first_name=self.request.data.get('first_name'),
+                        last_name=self.request.data.get('last_name'),
+                        is_staff=False if self.request.data['group'] == 'general_user' else True,
                 )
         group_id_array=json.loads(self.request.data['group'])
         
