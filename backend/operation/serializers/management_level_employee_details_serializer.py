@@ -7,7 +7,7 @@ class ManagementLevelEmployeeDetailsSerializer(serializers.ModelSerializer):
         model = op_models.ManagementLevelEmployeeDetails
         fields = (
             'id',
-            'application_certificate_establishment',
+            'application',
             'name',
             'age',
             'gender',

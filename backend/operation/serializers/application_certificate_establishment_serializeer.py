@@ -16,9 +16,10 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
 
     related_management_level_employee_details = op_serializer.ManagementLevelEmployeeDetailsSerializer(source = 'management_level_employee',many=True, read_only=True)
     related_application_progress_history = op_serializer.ApplicationProgressHistorySerializer(source="application_progress_history", many=True, read_only=True)
+   
     class Meta:
-          model = op_models.ApplicationForCertificateOfEstablishment
-          fields = (
+        model = op_models.ApplicationForCertificateOfEstablishment
+        fields = (
                     'id',
                     'office_location',
                     'registration_status',
@@ -45,6 +46,11 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
                     'updated_at',
                     'approved_at',
                     'approved_by',
+                    'pull_status',
+                    'pulled_by',
+                    'calculated_fee',
+                    'is_fee_deposited',
+                    'token_number',
                     'related_office_situated_at',
                     'related_establishment_category',
                     'related_applied_office_details',
@@ -54,4 +60,4 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
                     'related_management_level_employee_details',
                     'related_application_progress_history',
 
-                    )
+                )

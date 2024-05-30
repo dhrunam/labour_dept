@@ -181,7 +181,9 @@ REST_DURIN = {
 USER_ROLES = {
     "superadmin":"superadmin",
     "general_user":"general_user",
-    "dept_admin": "dept_admin",
+    "level1_dept_admin": "level1_dept_admin",
+    "level2_dept_admin": "level2_dept_admin",
+    "level3_dept_admin": "level3_dept_admin",
 }
 
 
@@ -191,14 +193,14 @@ INTIMATION_TYPE = {
 }
 
 APPLICATION_STATUS={
-    "forwarded":"forwarded",
+    # "forwarded":"forwarded",
     "received":"received",
     "rejected":"rejected",
-    "pending" : "pending",
+    # "pending" : "pending",
     "approved" : "approved",
-    "completed":"completed",
-    "t1-verfication":"T1-Verfication",
-    "t2-fee calculation":"T2-Fee Calculation"
+    # "completed":"completed",
+    "t2-verification":"T2-Verfication",
+    "t3-verification":"T3-Verfication",
 
 }
 PG_PARAMS={}

@@ -8,7 +8,7 @@ class ApplicationProgressHistorySerializer(serializers.ModelSerializer):
         model = op_models.ApplicationProgressHistory
         fields = (
             'id',
-            'application_certificate_establishment',
+            'application',
             'initiated_by',
             'remarks',
             'application_status',

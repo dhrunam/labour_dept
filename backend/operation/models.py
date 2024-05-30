@@ -28,41 +28,46 @@ class ApplicationForCertificateOfEstablishment(models.Model):
     is_agreed_terms_and_condition = models.BooleanField(default = False)
     application_status = models.CharField(max_length=128, null=False, default=settings.APPLICATION_STATUS["received"])
     applied_office_details = models.ForeignKey(mst_model.OfficeDetails, on_delete = models.SET_NULL, null=True, related_name="application_for_est")
-    applied_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="appl_for_certificate_est")
+    applied_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="appl_for_certificate_est_applied_by")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     approved_at = models.DateTimeField(auto_now=False, null=True)
-    approved_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="appr_for_certificate_est")
+    approved_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="appr_for_certificate_est_approved_by")
+    pull_status = models.BooleanField(default=False)
+    pulled_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="appr_for_certificate_est_pulled_by")
+    calculated_fee =models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    is_fee_deposited = models.BooleanField(default=False)
+    token_number = models.CharField(max_length=20, default='')
 
 class ApplicationProgressHistory(models.Model):
-    application_certificate_establishment = models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete=models.SET_NULL, null=True, related_name='application_progress_history')
+    application = models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete=models.SET_NULL, null=True, related_name='application_progress_history')
     initiated_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="application_progress_history")
-    remarks = models.CharField()
+    remarks = models.CharField(max_length=1024, default='',blank=True )
     application_status = models.CharField(max_length=128, null=False, default=settings.APPLICATION_STATUS["received"])
     created_at = models.DateTimeField(auto_now_add=True)
 
 class EmployerParentageDetails(models.Model):
-    application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_parentel_details")
+    application= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_parentel_details")
     parentage_name = models.CharField(max_length =256, null=False)
     designation = models.CharField(max_length =128, null=False)
     permanent_address = models.CharField(max_length =128, null=False)
     nature_interest = models.CharField(max_length =128, null=False)
 
 class EmployerDetails(models.Model):
-    application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_details")
+    application= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_details")
     name = models.CharField(max_length =128, null=False)
     designation =  models.CharField(max_length =128, null=False)
     permanent_address = models.CharField(max_length =512, null=False)
 
 class EmployerFamilyMemberDetails(models.Model):
-    application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_family_member")
+    application= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "employer_family_member")
     name = models.CharField(max_length =128, null=False)
     age =  models.DecimalField(max_digits=5, decimal_places=2 )
     gender = models.CharField(max_length =10, null=False)
     relationship = models.CharField(max_length =128, null=False)
 
 class ManagementLevelEmployeeDetails(models.Model):
-    application_certificate_establishment= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "management_level_employee")
+    application= models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete = models.SET_NULL, null= True, related_name = "management_level_employee")
     name = models.CharField(max_length =128, null=False)
     age =  models.DecimalField(max_digits=5, decimal_places=2 )
     gender = models.CharField(max_length =10, null=False)

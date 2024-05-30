@@ -6,7 +6,7 @@ class EmployerDetailsSerializer(serializers.ModelSerializer):
         model = op_models.EmployerDetails
         fields = (
             'id',
-            'application_certificate_establishment',
+            'application',
             'name',
             'designation',
             'designation',

@@ -7,7 +7,7 @@ class EmployerFamilyMemberDetailsSerializer(serializers.ModelSerializer):
         model = op_models.EmployerFamilyMemberDetails
         fields = (
             'id',
-            'application_certificate_establishment',
+            'application',
             'name',
             'age',
             'gender',

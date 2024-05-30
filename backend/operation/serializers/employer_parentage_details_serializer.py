@@ -7,7 +7,7 @@ class EmployerParentageDetailsSerializer(serializers.ModelSerializer):
         model = op_models.EmployerParentageDetails
         fields = (  
                     'id',
-                    'application_certificate_establishment',
+                    'application',
                     'parentage_name',
                     'designation',
                     'permanent_address',
