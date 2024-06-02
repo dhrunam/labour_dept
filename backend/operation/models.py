@@ -6,6 +6,7 @@ from account import models as acc_models
 # Create your models here.
 
 class ApplicationForCertificateOfEstablishment(models.Model):
+    application_no= models.CharField(max_length=50, null=False)
     office_location = models.ForeignKey(mst_model.District, on_delete = models.SET_NULL, null = True, related_name= "application_for_est")
     registration_status = models.CharField(max_length=128, null=False)
     full_name_applicant = models.CharField(max_length =256, null=False)
@@ -72,6 +73,11 @@ class ManagementLevelEmployeeDetails(models.Model):
     age =  models.DecimalField(max_digits=5, decimal_places=2 )
     gender = models.CharField(max_length =10, null=False)
     relationship = models.CharField(max_length =128, null=False)
+
+class ApplicationNumberSequence(models.Model):
+    prefix = models.CharField(max_length=50, null=False)
+    sequence = models.IntegerField(default=0)
+
 
 
 

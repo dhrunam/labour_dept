@@ -21,6 +21,7 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
         model = op_models.ApplicationForCertificateOfEstablishment
         fields = (
                     'id',
+                    'application_no',
                     'office_location',
                     'registration_status',
                     'full_name_applicant',

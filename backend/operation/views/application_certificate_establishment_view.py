@@ -5,6 +5,7 @@ from backend.utility import file_upload_handler
 from django.conf  import settings
 import json, datetime
 from account import models as acc_models
+from backend import utility
 
 
 def ApplicationProgressHistoryInsert(self,data):
@@ -49,12 +50,15 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data._mutable = True
         request = file_upload_handler(self,request)
+        application_number = utility.generate_application_no(self, request.data.get('application_no_prefix'))
+        request.data['application_no'] = application_number
         request.data['applied_by'] = self.request.user.id
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
         headers = self.get_success_headers(serializer.data)
         employer_parentage_details=json.loads(request.data.get('employer_parentage_details'))
+
         if employer_parentage_details and instance:
             for data in employer_parentage_details:
                 op_models.EmployerParentageDetails.objects.create(
@@ -99,7 +103,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
         
         op_models.ApplicationProgressHistory.objects.create(
                 application = instance,
-                initiated_by = self.request.user ,
+                # initiated_by = self.request.user ,
                 application_status = settings.APPLICATION_STATUS["received"],
 
                 

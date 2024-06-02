@@ -2,6 +2,7 @@ from datetime import datetime
 import time
 import requests
 from django.core.mail import send_mail
+from operation import models as op_models
 
 
 
@@ -51,3 +52,25 @@ def send_emil_from_app(self, request):
         recipient_list = ['recipient@example.com']
         send_mail(subject, message, from_email, recipient_list)
 
+
+
+def generate_application_no(self,prefix):
+        model=op_models.ApplicationNumberSequence
+        latest_record = op_models.ApplicationNumberSequence.objects.filter(prefix=prefix).last()
+
+        sl_no = 1
+        if latest_record:
+            sl_no = latest_record.sequence
+            print('Application No:',sl_no)
+            if sl_no:
+                sl_no = sl_no +1
+
+            latest_record.sequence = sl_no
+            latest_record.save()
+        else:
+            model.objects.create(
+                prefix=prefix,
+                sequence = sl_no
+                )
+
+        return prefix + '-' + str(sl_no)   
