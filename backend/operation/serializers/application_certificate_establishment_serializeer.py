@@ -41,6 +41,7 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
                     'total_emplyee_other_14',
                     'weekly_holidays_name',
                     'is_agreed_terms_and_condition',
+                    'application_status',
                     'applied_office_details',
                     'applied_by',
                     'created_at',
