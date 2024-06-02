@@ -29,18 +29,22 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
         if self.request.user.groups.filter(name=settings.USER_ROLES["levl1_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
-                return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization).order_by('-id')
+                return op_models.ApplicationForCertificateOfEstablishment.objects.all().order_by('-id')
         
         if self.request.user.groups.filter(name=settings.USER_ROLES["levl2_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
-                return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization,
+                return op_models.ApplicationForCertificateOfEstablishment.objects.all(
                                                                                          application_status=settings.APPLICATION_STATUS["t2-verification"]
                                                                                          ).order_by('-id')
         if self.request.user.groups.filter(name=settings.USER_ROLES["levl3_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
-                return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization,
+
+                # return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization,
+                #                                                                          application_status=settings.APPLICATION_STATUS["t3-verification"]
+                #                                                                          ).order_by('-id')
+                return op_models.ApplicationForCertificateOfEstablishment.objects.all(
                                                                                          application_status=settings.APPLICATION_STATUS["t3-verification"]
                                                                                          ).order_by('-id')
 
@@ -53,6 +57,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
         application_number = utility.generate_application_no(self, request.data.get('application_no_prefix'))
         request.data['application_no'] = application_number
         request.data['applied_by'] = self.request.user.id
+        request.data['application_status'] = settings.APPLICATION_STATUS['t2-verification']
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
