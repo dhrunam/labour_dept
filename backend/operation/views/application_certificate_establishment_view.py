@@ -50,7 +50,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data._mutable = True
         request = file_upload_handler(self,request)
-        application_number = utility.generate_application_no(self, request.data.get('application_number_prefix'))
+        application_number = utility.generate_application_no(self, request.data.get('application_no_prefix'))
         request.data['application_no'] = application_number
         request.data['applied_by'] = self.request.user.id
         serializer = self.get_serializer(data=request.data)
