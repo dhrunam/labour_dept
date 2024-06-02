@@ -26,13 +26,13 @@ export class EditComponent {
       fd.append('contact_number', data.value.contact);
       fd.append('gender', data.value.gender);
       fd.append('password', data.value.password);
-      fd.append('group', 'general_user');
+      fd.append('group', data.value.role);
       fd.append('is_deleted', 'False');
       fd.append('username', data.value.username);
       this.usersSerivce.register_user(fd).subscribe({
         next: data => {
           this.loader = false;
-          this.router.navigate(['/dashboard/users/view'])
+          this.router.navigate(['/dashboard/users/view']);
         }
       })
     }

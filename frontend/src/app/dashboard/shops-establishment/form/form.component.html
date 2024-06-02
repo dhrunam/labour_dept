@@ -14,10 +14,6 @@
             <hr>
             <div class="row g-3">
                 <div class="col-12 col-md-4">
-                    <label class="form-label">Department</label>
-                    <input type="text" class="form-control shadow-none" value="Department of Labour" disabled>
-                </div>
-                <div class="col-12 col-md-4">
                     <label class="form-label">District<span class="text-danger">*</span></label>
                     <select class="form-select shadow-none" name="district" ngModel #district="ngModel" required>
                         <option value="">---Select District---</option>
@@ -34,25 +30,45 @@
                         <option value="Already Registered">Already Registered</option>
                     </select>
                 </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Reference No.<span class="text-danger">*</span></label>
+                    <select class="form-select shadow-none" name="reference_no" ngModel #reference_no="ngModel" required>
+                        <option value="">---Select Referrence No.---</option>
+                        <option value="GOS-DL-GTK">GOS/DL/GTK</option>
+                        <option value="GOS-DL-NMC">GOS/DL/GTK</option>
+                        <option value="GOS-DL-GYZ">GOS/DL/GTK</option>
+                        <option value="GOS-DL-SRG">GOS/DL/GTK</option>
+                        <option value="GOS-DL-MGN">GOS/DL/GTK</option>
+                        <option value="GOS-DL-PKY">GOS/DL/GTK</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="details mt-3">
             <h5>Application Details</h5>
             <hr>
             <div class="row g-3">
-                <div class="col-12 col-lg-3 col-md-4">
-                    <label class="form-label">Full Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control shadow-none" name="full_name" ngModel #full_name="ngModel" required>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">First Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" name="first_name" ngModel #first_name="ngModel" required>
                 </div>
-                <div class="col-12 col-lg-3 col-md-4">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Middle Name</label>
+                    <input type="text" class="form-control shadow-none" name="middle_name" ngModel #middle_name="ngModel">
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Last Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" name="last_name" ngModel #last_name="ngModel">
+                </div>
+                <div class="col-12 col-md-4">
                     <label class="form-label">E-Mail<span class="text-danger">*</span></label>
                     <input type="text" class="form-control shadow-none" name="email" ngModel #email="ngModel" required>
                 </div>
-                <div class="col-12 col-lg-3 col-md-4">
+                <div class="col-12 col-md-4">
                     <label class="form-label">Establishments Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control shadow-none" name="establishment_name" ngModel #establishment_name="ngModel" required>
                 </div>
-                <div class="col-12 col-lg-3 col-md-4">
+                <div class="col-12 col-md-4">
                     <label class="form-label">Applicants Photograph<span class="text-danger">*</span></label>
                     <input type="file" class="form-control shadow-none" (change)="photoUpload($event)" name="photo" ngModel #photo="ngModel" required>
                 </div>
@@ -235,37 +251,13 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-12">
-                    <label>Total Number of Employees<span class="text-danger">*</span></label>
-                    <hr>
-                    <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Male" name="old_male" ngModel #old_male="ngModel" required>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" ngModel #old_female="ngModel" required>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Total" name="old_total" ngModel #old_total="ngModel" required>
-                        </div>
-                    </div>
+                <div class="col-6">
+                    <label class="form-label">Total Number of Employees (Old)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="Total" name="old_total" ngModel #old_total="ngModel" required>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <label>Total Number of Employees<span class="text-danger">*</span></label>
-                    <hr>
-                    <div class="row g-3 mt-2">
-                        <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Male" name="young_male" ngModel #young_male="ngModel" required>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Female" name="young_female" ngModel #young_female="ngModel" required>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Total" name="young_total" ngModel #young_total="ngModel" required>
-                        </div>
-                    </div>
+                <div class="col-6">
+                    <label class="form-label">Total Number of Employees (Young)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="Total" name="young_total" ngModel #young_total="ngModel" required>
                 </div>
             </div>
             <div class="row mt-4">

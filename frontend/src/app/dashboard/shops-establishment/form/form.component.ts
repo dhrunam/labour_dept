@@ -148,7 +148,7 @@ export class FormComponent {
       let fd = new FormData();
       fd.append('office_location', data.value.district);
       fd.append('registration_status', data.value.registration_type);
-      fd.append('full_name_applicant', data.value.full_name);
+      fd.append('full_name_applicant', data.value.middle_name ? `${data.value.first_name} ${data.value.middle_name} ${data.value.last_name}` :  `${data.value.first_name} ${data.value.last_name}`);
       fd.append('email_applicant', data.value.email);
       fd.append('photograph_applicant', this.photo);
       fd.append('establishment_name', data.value.establishment_name);
@@ -157,12 +157,12 @@ export class FormComponent {
       fd.append('situation_of_other_premises', data.value.situation);
       fd.append('establishment_category', data.value.establishment_category);
       fd.append('nature_business', data.value.nature_of_business);
-      fd.append('total_emplyee_male_18', data.value.old_male);
-      fd.append('total_emplyee_female_18', data.value.old_female);
-      fd.append('total_emplyee_other_18', '0');
-      fd.append('total_emplyee_male_14', data.value.young_male);
-      fd.append('total_emplyee_female_14', data.value.young_female);
-      fd.append('total_emplyee_other_14', '0');
+      fd.append('total_emplyee_male_18', '0');
+      fd.append('total_emplyee_female_18', '0');
+      fd.append('total_emplyee_other_18', data.value.old_total);
+      fd.append('total_emplyee_male_14', '0');
+      fd.append('total_emplyee_female_14', '0');
+      fd.append('total_emplyee_other_14', data.value.young_total);
       fd.append('weekly_holidays_name', data.value.weekly_holidays);
       fd.append('is_agreed_terms_and_condition', this.agree ? 'True':'False');
       fd.append('applied_office_details', data.value.office);

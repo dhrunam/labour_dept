@@ -48,9 +48,9 @@
         <div class="col-md-4 mt-3">
             <select class="form-select shadow-none" name="role" ngModel #role="ngModel" required>
                 <option value="">---Select Role---</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Others">Others</option>
+                <option value="level1_dept_admin">Level 1 Admin</option>
+                <option value="level2_dept_admin">Level 2 Admin</option>
+                <option value="level3_dept_admin">Level 3 Admin</option>
             </select>
             @if(gender.touched && gender.invalid){
                 <small class="text-danger">Please select gender</small>
