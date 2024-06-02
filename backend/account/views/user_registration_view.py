@@ -88,41 +88,41 @@ class UserCreateFromAdmin(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     @transaction.atomic()
     def post(self, request, *args, **kwargs):
-        request = file_upload_handler(self, request)
-        user = User.objects.create(
-                        username=self.request.data.get('username'),
+        try:
+
+            request = file_upload_handler(self, request)
+            print(request.data.get('group'))
+            user = User.objects.create(
+                        username=self.request.data.get('email'),
                         email=self.request.data.get('email'),
                         first_name=self.request.data.get('first_name'),
                         last_name=self.request.data.get('last_name'),
-                        is_staff=False if self.request.data['group'] == 'general_user' else True,
-                )
-        group_id_array=json.loads(self.request.data['group'])
-        
-        group_ids=list(Group.objects.filter(
-               id__in=group_id_array).values_list('pk', flat=True))
-        for item in group_ids:
-             user.groups.add(item)
-        user.set_password(self.request.data['password'])
-        
-        user.save()
+                        is_staff=False if self.request.data.get('group') == settings.USER_ROLES['general_user'] else True,
+                    )
+            user.groups.add(Group.objects.get(
+                        name=self.request.data.get('group')))
+            user.set_password(self.request.data.get('password'))
+            user.save()
 
-        user_profile = acc_models.UserProfile.objects.update_or_create(
-                    user=user,
-                    defaults={
-                        # "name": request.data['name'],
-                        "contact_number": request.data.get('contact_number'),
-                        "email": request.data.get('email'),
-                        "gender": request.data.get('gender', ''),
-                        "document_type": request.data.get('document_type',''),
-                        "id_proof": request.data.get('id_proof',''),
-                        "organization": master_models.Organization.objects.get(pk=request.data.get('organization')) if  request.data.get('organization', False) else None,
-                        "bar_registration_number": request.data.get('bar_registration_number',''),
-                        "bar_certificate" : request.data.get('bar_certificate',''),
-                        "is_deleted": request.data.get('is_deleted'),
-                    }
-        )
-        return response.Response("User created sucessfully", status=status.HTTP_201_CREATED)
-    
+            user_profile = acc_models.UserProfile.objects.update_or_create(
+                        user=user,
+                        defaults={
+                            # "name": request.data['name'],
+                            "contact_number": request.data.get('contact_number'),
+                            "email": request.data.get('email'),
+                            "gender": request.data.get('gender', ''),
+                            "document_type": request.data.get('document_type',''),
+                            "id_proof": request.data.get('id_proof',''),
+                            "organization": master_models.Organization.objects.get(pk=request.data.get('organization')) if  request.data.get('organization', False) else None,
+                            "is_deleted": request.data.get('is_deleted'),
+                        }
+            )
+            return response.Response("User created sucessfully", status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print(e)
+            return response.Response("Some error occured. Please try again", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+   
    
 class UserList(generics.ListAPIView):
     queryset = User.objects.all().order_by('-id')
