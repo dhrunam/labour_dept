@@ -86,6 +86,7 @@ class UserCreateFromAdmin(generics.CreateAPIView):
     serializer_class = acc_serializer.UserSerializerForRegistraion
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    
     @transaction.atomic()
     def post(self, request, *args, **kwargs):
         try:

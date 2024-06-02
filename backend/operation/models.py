@@ -75,8 +75,8 @@ class ManagementLevelEmployeeDetails(models.Model):
     relationship = models.CharField(max_length =128, null=False)
 
 class ApplicationNumberSequence(models.Model):
-    application_no = models.CharField(max_length=50, null=False)
-    district = models.ForeignKey(mst_model.District)
+    prefix = models.CharField(max_length=50, null=False)
+    sequence = models.IntegerField(default=0)
 
 
 

@@ -6,6 +6,6 @@ class ApplicationNumberSequenceSerializer(serializers.ModelSerializer):
         model = op_models.ApplicationNumberSequence
         fields =(
             'id',
-            'application_no',
-            'district',
+            'prefix',
+            'sequance',
         )
