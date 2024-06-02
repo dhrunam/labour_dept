@@ -45,7 +45,8 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'related_profile',
             'related_group',
-           
+            'first_name',
+            'last_name',
         ]
 
 class   UserSerializerForRegistraion(serializers.ModelSerializer):

@@ -26,18 +26,18 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
         if self.request.user.groups.filter(name=settings.USER_ROLES["general_user"]).exists():
            return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_by=self.request.user.id).order_by('-id')
 
-        if self.request.user.groups.filter(name=settings.USER_ROLES["levl1_dept_admin"]).exists():
+        if self.request.user.groups.filter(name=settings.USER_ROLES["level1_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
-                return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization).order_by('-id')
+                return op_models.ApplicationForCertificateOfEstablishment.objects.all().order_by('-id')
         
-        if self.request.user.groups.filter(name=settings.USER_ROLES["levl2_dept_admin"]).exists():
+        if self.request.user.groups.filter(name=settings.USER_ROLES["level2_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
                 return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization,
                                                                                          application_status=settings.APPLICATION_STATUS["t2-verification"]
                                                                                          ).order_by('-id')
-        if self.request.user.groups.filter(name=settings.USER_ROLES["levl3_dept_admin"]).exists():
+        if self.request.user.groups.filter(name=settings.USER_ROLES["level3_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
                 return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_office_details=user_profile.organization,

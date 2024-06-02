@@ -24,6 +24,7 @@ export class DetailsComponent {
     this.applicationService.get_application(id).subscribe({
       next: data => {
         this.details = data;
+        console.log(data);
       }
     })
   }

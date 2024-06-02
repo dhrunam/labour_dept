@@ -173,43 +173,11 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-12">
-            <label>Total Number of Employees</label>
-            <hr>
-            <div class="row g-3 mt-2">
-                <div class="col-12 col-md-4">
-                    <label class="form-label">Male</label><br>
-                    <input type="text" class="form-control shadow-none" placeholder="Male" name="old_male" [value]="details && details.total_emplyee_male_18" disabled>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label">Female</label><br>
-                    <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" [value]="details && details.total_emplyee_female_18" disabled>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label">Total</label><br>
-                    <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" [value]="details && (details.total_emplyee_female_18+details.total_emplyee_male_18)" disabled>
-                </div>
-            </div>
+        <div class="col-12 col-md-6">
+            <label><b>Total Number of Employees (Old): </b>{{ details && details.total_emplyee_other_18}}</label>
         </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-12">
-            <label>Total Number of Employees</label>
-            <hr>
-            <div class="row g-3 mt-2">
-                <div class="col-12 col-md-4">
-                    <label class="form-label">Male</label><br>
-                    <input type="text" class="form-control shadow-none" placeholder="Male" [value]="details && details.total_emplyee_male_14" disabled>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label">Female</label><br>
-                    <input type="text" class="form-control shadow-none" placeholder="Female" [value]="details && details.total_emplyee_female_14" disabled>
-                </div>
-                <div class="col-12 col-md-4">
-                    <label class="form-label">Total</label><br>
-                    <input type="text" class="form-control shadow-none" placeholder="Female" name="old_female" [value]="details && (details.total_emplyee_female_14+details.total_emplyee_male_14)" disabled>
-                </div>
-            </div>
+        <div class="col-12 col-md-6">
+            <label><b>Total Number of Employees (Young): </b>{{ details && details.total_emplyee_other_14}}</label>
         </div>
     </div>
     <div class="row mt-4">

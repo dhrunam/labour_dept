@@ -3,20 +3,27 @@
     <button class="btn btn-primary" routerLink="/dashboard/users/add">+ Add</button>
 </header>
 <hr>
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">S.No.</th>
-                <th scope="col">Name</th>
-                <th scope="col">Contact Number</th>
-                <th scope="col">Email</th>
-            </tr>
-        </thead>
-        <!-- <tbody>
-            <tr>
-                <td></td>
-            </tr>
-        </tbody> -->
-    </table>
-</div>
+@if(users && users[0]){
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S.No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(u of users; track u; let i=$index){
+                    <tr>
+                        <td>{{ i+1 }}</td>
+                        <td>{{ u.first_name }} {{ u.last_name }}</td>
+                        <td>{{ u.related_profile.contact_number }}</td>
+                        <td>{{ u.username }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

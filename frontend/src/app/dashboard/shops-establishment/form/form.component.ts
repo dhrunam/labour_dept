@@ -146,6 +146,7 @@ export class FormComponent {
     else{
       this.loader = true;
       let fd = new FormData();
+      fd.append('application_no_prefix',data.value.reference_no);
       fd.append('office_location', data.value.district);
       fd.append('registration_status', data.value.registration_type);
       fd.append('full_name_applicant', data.value.middle_name ? `${data.value.first_name} ${data.value.middle_name} ${data.value.last_name}` :  `${data.value.first_name} ${data.value.last_name}`);
