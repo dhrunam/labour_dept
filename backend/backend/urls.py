@@ -20,6 +20,9 @@ from master import urls as mst_urls
 from operation import urls as op_urls
 from account import urls as acc_urls
 from django.conf.urls.static import static
+from django.conf import settings
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(mst_urls)),
