@@ -5,7 +5,7 @@ from backend.utility import file_upload_handler
 from django.conf  import settings
 import json, datetime
 from account import models as acc_models
-from backend import utility
+from backend.utility import generate_application_no
 
 
 def ApplicationProgressHistoryInsert(self,data):
@@ -26,18 +26,18 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
         if self.request.user.groups.filter(name=settings.USER_ROLES["general_user"]).exists():
            return op_models.ApplicationForCertificateOfEstablishment.objects.filter(applied_by=self.request.user.id).order_by('-id')
 
-        if self.request.user.groups.filter(name=settings.USER_ROLES["levl1_dept_admin"]).exists():
+        if self.request.user.groups.filter(name=settings.USER_ROLES["level1_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
                 return op_models.ApplicationForCertificateOfEstablishment.objects.all().order_by('-id')
         
-        if self.request.user.groups.filter(name=settings.USER_ROLES["levl2_dept_admin"]).exists():
+        if self.request.user.groups.filter(name=settings.USER_ROLES["level2_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
                 return op_models.ApplicationForCertificateOfEstablishment.objects.all(
                                                                                          application_status=settings.APPLICATION_STATUS["t2-verification"]
                                                                                          ).order_by('-id')
-        if self.request.user.groups.filter(name=settings.USER_ROLES["levl3_dept_admin"]).exists():
+        if self.request.user.groups.filter(name=settings.USER_ROLES["level3_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
 
@@ -54,7 +54,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data._mutable = True
         request = file_upload_handler(self,request)
-        application_number = utility.generate_application_no(self, request.data.get('application_no_prefix'))
+        application_number = generate_application_no(self, request.data.get('application_no_prefix'))
         request.data['application_no'] = application_number
         request.data['applied_by'] = self.request.user.id
         request.data['application_status'] = settings.APPLICATION_STATUS['t2-verification']
@@ -127,7 +127,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
         request.data._mutable = True
         application_status = request.data.get('application_status')
         user_group = self.request.user.groups.all()
-        if user_group.filter(name=self.user_roles['levl3_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['approved']:
+        if user_group.filter(name=self.user_roles['level3_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['approved']:
             request.data['approved_by'] = self.request.user.id
             request.data['approved_at'] = datetime.datetime.now()
         request.data._mutable = False
@@ -139,7 +139,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
         request.data._mutable = True
         application_status = request.data.get('application_status')
         user_group = self.request.user.groups.all()
-        if user_group.filter(name=self.user_roles['levl1_dept_admin']).exists() :
+        if user_group.filter(name=self.user_roles['level1_dept_admin']).exists() :
             
 
             if application_status == settings.APPLICATION_STATUS['t2-verification']:
@@ -156,7 +156,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                 request._full_data = new_data
 
 
-        if user_group.filter(name=self.user_roles['levl2_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['t3-verification']:
+        if user_group.filter(name=self.user_roles['level2_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['t3-verification']:
             new_data = {'application_status': application_status}
             if application_status == settings.APPLICATION_STATUS['t1-verification']:
                 new_data.update({
@@ -166,7 +166,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                 request._full_data = new_data
 
         
-        if user_group.filter(name=self.user_roles['levl3_dept_admin']).exists():
+        if user_group.filter(name=self.user_roles['level3_dept_admin']).exists():
             
             new_data.update({
                 'application_status': application_status,

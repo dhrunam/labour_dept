@@ -205,30 +205,30 @@ APPLICATION_STATUS={
 }
 PG_PARAMS={}
 
-if DEBUG:
-    PG_PARAMS={
-        "merchant_code" : "sikkimnic_sbs_uat_2021",
-        "major_head_code" : "0215",
-        "minor_head_code" : "01.103",
-        "return_url" : "http://localhost:8000/api/rti/payment/response",
-        "redirect_to_front_end_for_application_fee_paymet_status_page" : "http://localhost:4200/dashboard/payment?application=",
-        "redirect_to_front_end_for_intimation_fee_paymet_status_page" : "http://localhost:4200/dashboard/payment?application=",
-        "salt" : "31c6163218e5c8233ea9af089785bd3125b210cc995add2da23e36d0779d51d7",
-        "payment_request_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/PaymentRequestGOS" ,
-        "payment_status_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/GetTransactionStatus" ,
-    }
-else:
-    PG_PARAMS={
-        "merchant_code" : "HCOSb6b7653647703084793cc9",
-        "major_head_code" : "0070",
-        "minor_head_code" : "01.501",
-        "return_url" : "https://eservices.hcs.nic.in/api/rti/payment/response",
-        "redirect_to_front_end_for_application_fee_paymet_status_page" : "https://eservices.hcs.nic.in/dashboard/payment?application=",
-        "redirect_to_front_end_for_intimation_fee_paymet_status_page" : "https://eservices.hcs.nic.in/dashboard/payment?application=",
-        "salt" : "05f4d50ce3450363b07a0772f9fd82f403f44cb3feee37700ebac9b8fc33d51f",
-        "payment_request_url" : "https://www.sbsebr.com/sbslive/InitiateTransaction/PaymentRequestGOS" ,
-        "payment_status_url" : "https://www.sbsebr.com/sbslive/InitiateTransaction/GetTransactionStatus" ,
-    }
+# if DEBUG:
+#     PG_PARAMS={
+#         "merchant_code" : "sikkimnic_sbs_uat_2021",
+#         "major_head_code" : "0215",
+#         "minor_head_code" : "01.103",
+#         "return_url" : "http://localhost:8000/api/rti/payment/response",
+#         "redirect_to_front_end_for_application_fee_paymet_status_page" : "http://localhost:4200/dashboard/payment?application=",
+#         "redirect_to_front_end_for_intimation_fee_paymet_status_page" : "http://localhost:4200/dashboard/payment?application=",
+#         "salt" : "31c6163218e5c8233ea9af089785bd3125b210cc995add2da23e36d0779d51d7",
+#         "payment_request_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/PaymentRequestGOS" ,
+#         "payment_status_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/GetTransactionStatus" ,
+#     }
+# else:
+#     PG_PARAMS={
+#         "merchant_code" : "HCOSb6b7653647703084793cc9",
+#         "major_head_code" : "0070",
+#         "minor_head_code" : "01.501",
+#         "return_url" : "https://eservices.hcs.nic.in/api/rti/payment/response",
+#         "redirect_to_front_end_for_application_fee_paymet_status_page" : "https://eservices.hcs.nic.in/dashboard/payment?application=",
+#         "redirect_to_front_end_for_intimation_fee_paymet_status_page" : "https://eservices.hcs.nic.in/dashboard/payment?application=",
+#         "salt" : "05f4d50ce3450363b07a0772f9fd82f403f44cb3feee37700ebac9b8fc33d51f",
+#         "payment_request_url" : "https://www.sbsebr.com/sbslive/InitiateTransaction/PaymentRequestGOS" ,
+#         "payment_status_url" : "https://www.sbsebr.com/sbslive/InitiateTransaction/GetTransactionStatus" ,
+#     }
 
 PAYMENT_FOR = {
     "rti_application" : "RTI Application",

@@ -55,7 +55,9 @@ def send_emil_from_app(self, request):
 
 
 def generate_application_no(self,prefix):
+        print("Prefixed:", prefix)
         model=op_models.ApplicationNumberSequence
+        # prefix='GOS-DL-GTK'
         latest_record = op_models.ApplicationNumberSequence.objects.filter(prefix=prefix).last()
 
         sl_no = 1
