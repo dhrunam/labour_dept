@@ -167,14 +167,14 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
 
         
         if user_group.filter(name=self.user_roles['levl3_dept_admin']).exists():
-            if application_status == settings.APPLICATION_STATUS['approved']:
-                new_data.update({
-                    'application_status': application_status,
-                    'approved_by': self.request.user.id,
-                    'approved_at': datetime.datetime.now()
+            
+            new_data.update({
+                'application_status': application_status,
+                'approved_by': self.request.user.id,
+                'approved_at': datetime.datetime.now()
 
-                })
-                request._full_data = new_data
+            })
+            request._full_data = new_data
 
         if application_status:
             ApplicationProgressHistoryInsert(self,{'application':self.get_object(),
@@ -183,6 +183,8 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                                             'application_status':application_status
                                             })
         request.data._mutable = False
-        return super().put(request, *args, **kwargs)
+        return super().patch(request, *args, **kwargs)
+    
+
     
     
