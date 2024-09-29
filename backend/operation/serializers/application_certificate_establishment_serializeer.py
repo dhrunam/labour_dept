@@ -53,6 +53,7 @@ class ApplicationForCertificateOfEstablishmentSerializer(serializers.ModelSerial
                     'calculated_fee',
                     'is_fee_deposited',
                     'token_number',
+                    'trade_licence',
                     'related_office_situated_at',
                     'related_establishment_category',
                     'related_applied_office_details',

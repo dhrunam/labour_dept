@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'master',
     'configuration',
     'operation',
+    'common',
     'drf_api_logger',
 
 ]
