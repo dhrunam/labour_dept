@@ -19,8 +19,9 @@ from django.urls import path, include
 from master import urls as mst_urls
 from operation import urls as op_urls
 from account import urls as acc_urls
-from django.conf import settings
 from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +29,12 @@ urlpatterns = [
     path('api/', include(op_urls)),
     path('api/',include(acc_urls)),
 ]
+<<<<<<< HEAD
 if settings.DEBUG:
     urlpatterns += static('/media/', document_root=settings.MEDIA_ROOT)
+=======
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+>>>>>>> 891417f2d21530f48b47c7dbdd8fe79e772425bd

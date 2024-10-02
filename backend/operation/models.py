@@ -2,6 +2,10 @@ from django.db import models
 from master import models as mst_model
 from django.conf import settings
 from account import models as acc_models
+from common import custom_model_fields_validator as field_validator
+from django.db.models.signals import pre_save, post_delete
+from django.dispatch import receiver
+import os
 
 # Create your models here.
 
@@ -11,7 +15,9 @@ class ApplicationForCertificateOfEstablishment(models.Model):
     registration_status = models.CharField(max_length=128, null=False)
     full_name_applicant = models.CharField(max_length =256, null=False)
     email_applicant = models.CharField(max_length =256, null=False)
-    photograph_applicant = models.FileField(upload_to='applicant/photograph/', null=True, blank=True)
+    photograph_applicant = models.FileField(upload_to='applicant/photograph/',  null=True,  validators=[field_validator.FileExtensionValidator(['.jpg', '.jpeg', '.png', '.pdf']),
+                                            field_validator.FileSizeValidator(10*1024*1024),
+                                            field_validator.FileMimeTypeValidator(['image/jpeg', 'image/png', 'application/pdf'])])
     establishment_name = models.CharField(max_length =256, null=False)
     establishment_address = models.CharField(max_length =256, null=False)
     establishment_pincode = models.CharField(max_length =6, null=False)
@@ -39,6 +45,46 @@ class ApplicationForCertificateOfEstablishment(models.Model):
     calculated_fee =models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_fee_deposited = models.BooleanField(default=False)
     token_number = models.CharField(max_length=20, default='')
+    trade_licence = models.FileField(upload_to='applicant/trade_licence/',  null=True,  validators=[field_validator.FileExtensionValidator(['.jpg', '.jpeg', '.png', '.pdf']),
+                                            field_validator.FileSizeValidator(10*1024*1024),
+                                            field_validator.FileMimeTypeValidator(['image/jpeg', 'image/png', 'application/pdf'])])
+   
+
+# Signal to handle file deletion when an instance is deleted
+@receiver(post_delete, sender=ApplicationForCertificateOfEstablishment)
+def delete_file_from_user_qualification_on_delete(sender, instance, **kwargs):
+    if instance.photograph_applicant:
+        if os.path.isfile(instance.photograph_applicant.path):
+            os.remove(instance.photograph_applicant.path)
+    if instance.trade_licence:
+        if os.path.isfile(instance.trade_licence.path):
+            os.remove(instance.trade_licence.path)
+
+# Signal to handle old file deletion before saving a new one
+@receiver(pre_save, sender=ApplicationForCertificateOfEstablishment)
+def delete_old_file_from_user_qualificationon_on_update(sender, instance, **kwargs):
+    if not instance.pk:
+        return  # If instance is new, nothing to do
+    
+    try:
+        old_instance = sender.objects.get(pk=instance.pk)
+    except sender.DoesNotExist:
+        return  # If instance does not exist, nothing to do
+
+    old_file = old_instance.certificate
+    new_file = instance.certificate
+
+    if old_file and old_file != new_file:  # Check if the file is different
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
+
+    old_file = old_instance.marksheet
+    new_file = instance.marksheet
+
+    if old_file and old_file != new_file:  # Check if the file is different
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
+
 
 class ApplicationProgressHistory(models.Model):
     application = models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete=models.SET_NULL, null=True, related_name='application_progress_history')

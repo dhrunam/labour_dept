@@ -5,7 +5,7 @@ from backend.utility import file_upload_handler
 from django.conf  import settings
 import json, datetime
 from account import models as acc_models
-from backend import utility
+from backend.utility import generate_application_no
 
 
 def ApplicationProgressHistoryInsert(self,data):
@@ -54,7 +54,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data._mutable = True
         request = file_upload_handler(self,request)
-        application_number = utility.generate_application_no(self, request.data.get('application_no_prefix'))
+        application_number = generate_application_no(self, request.data.get('application_no_prefix'))
         request.data['application_no'] = application_number
         request.data['applied_by'] = self.request.user.id
         request.data['application_status'] = settings.APPLICATION_STATUS['t2-verification']
@@ -127,7 +127,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
         request.data._mutable = True
         application_status = request.data.get('application_status')
         user_group = self.request.user.groups.all()
-        if user_group.filter(name=self.user_roles['levl3_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['approved']:
+        if user_group.filter(name=self.user_roles['level3_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['approved']:
             request.data['approved_by'] = self.request.user.id
             request.data['approved_at'] = datetime.datetime.now()
         request.data._mutable = False
@@ -166,6 +166,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
 
         
         if user_group.filter(name=self.user_roles['level3_dept_admin']).exists():
+<<<<<<< HEAD
             new_data = {'application_status': application_status}
             new_data.update({
                     'application_status': application_status,
@@ -175,6 +176,16 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
             })
             request._full_data = new_data
                 
+=======
+            
+            new_data.update({
+                'application_status': application_status,
+                'approved_by': self.request.user.id,
+                'approved_at': datetime.datetime.now()
+
+            })
+            request._full_data = new_data
+>>>>>>> 891417f2d21530f48b47c7dbdd8fe79e772425bd
 
         if application_status:
             ApplicationProgressHistoryInsert(self,{'application':self.get_object(),
@@ -182,7 +193,14 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                                             'remarks': request.data.get('remarks'),
                                             'application_status':application_status
                                             })
+<<<<<<< HEAD
         # request.data._mutable = False
         return super().patch(request, *args, **kwargs)
+=======
+        request.data._mutable = False
+        return super().patch(request, *args, **kwargs)
+    
+
+>>>>>>> 891417f2d21530f48b47c7dbdd8fe79e772425bd
     
     
