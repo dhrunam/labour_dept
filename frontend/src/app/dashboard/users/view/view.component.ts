@@ -16,7 +16,6 @@ export class ViewComponent {
     this.userService.get_registered_users().subscribe({
       next: data => {
         this.users = data;
-        console.log(data);
       }
     })
   }

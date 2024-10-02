@@ -5,9 +5,10 @@
         <thead>
             <tr>
                 <th scope="col">S.No.</th>
+                <th scope="col">Application No.</th>
                 <th scope="col">Applicant Name</th>
-                <th scope="col">Applicant Email</th>
                 <th scope="col">Establishments Name</th>
+                <th scope="col">Status</th>
                 <th scope="col">View</th>
             </tr>
         </thead>
@@ -15,9 +16,10 @@
             @for(a of applications; track a; let i=$index){
                 <tr>
                     <td>{{ i+1 }}</td>
+                    <td>{{ a.application_no.replaceAll('-','/') }}</td>
                     <td>{{ a.full_name_applicant }}</td>
                     <td>{{ a.email_applicant }}</td>
-                    <td>{{ a.establishment_name }}</td>
+                    <td>{{ a.application_status.toUpperCase() }}</td>
                     <td><a [routerLink]="['/dashboard/shops-establishment/details', a.id]">View</a></td>
                 </tr>
             }

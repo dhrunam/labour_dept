@@ -16,6 +16,7 @@ export class ApplicationsComponent {
     this.applicationService.get_applications().subscribe({
       next: data => {
         this.applications = data.results;
+        console.log(data.results);
       }
     })
   }

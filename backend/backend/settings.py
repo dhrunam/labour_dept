@@ -98,8 +98,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'labour_dept_db',
         'USER': 'postgres',
-        'PASSWORD': 'Darkhorse@1',
-        'HOST': 'localhost', 
+        'PASSWORD': 'postgres',
+        'HOST': '93.127.199.87', 
         'PORT': '5432'
     }
 }

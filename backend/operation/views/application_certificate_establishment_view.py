@@ -35,7 +35,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
             if user_profile:
                 return op_models.ApplicationForCertificateOfEstablishment.objects.all(
-                                                                                         application_status=settings.APPLICATION_STATUS["t2-verification"]
+                                                                                        #  application_status=settings.APPLICATION_STATUS["t2-verification"]
                                                                                          ).order_by('-id')
         if self.request.user.groups.filter(name=settings.USER_ROLES["level3_dept_admin"]).exists():
             user_profile=acc_models.UserProfile.objects.filter(user=self.request.user.id).last()
@@ -45,7 +45,7 @@ class ApplicationForCertificateOfEstablishmentList(generics.ListCreateAPIView):
                 #                                                                          application_status=settings.APPLICATION_STATUS["t3-verification"]
                 #                                                                          ).order_by('-id')
                 return op_models.ApplicationForCertificateOfEstablishment.objects.all(
-                                                                                         application_status=settings.APPLICATION_STATUS["t3-verification"]
+                                                                                        #  application_status=settings.APPLICATION_STATUS["t3-verification"]
                                                                                          ).order_by('-id')
 
         return []
@@ -135,11 +135,10 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
     
     @transaction.atomic()
     def patch(self, request, *args, **kwargs):
-
         request.data._mutable = True
         application_status = request.data.get('application_status')
         user_group = self.request.user.groups.all()
-        if user_group.filter(name=self.user_roles['levl1_dept_admin']).exists() :
+        if user_group.filter(name=self.user_roles['level1_dept_admin']).exists() :
             
 
             if application_status == settings.APPLICATION_STATUS['t2-verification']:
@@ -156,7 +155,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                 request._full_data = new_data
 
 
-        if user_group.filter(name=self.user_roles['levl2_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['t3-verification']:
+        if user_group.filter(name=self.user_roles['level2_dept_admin']).exists() and application_status == settings.APPLICATION_STATUS['t3-verification']:
             new_data = {'application_status': application_status}
             if application_status == settings.APPLICATION_STATUS['t1-verification']:
                 new_data.update({
@@ -166,15 +165,16 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                 request._full_data = new_data
 
         
-        if user_group.filter(name=self.user_roles['levl3_dept_admin']).exists():
-            if application_status == settings.APPLICATION_STATUS['approved']:
-                new_data.update({
+        if user_group.filter(name=self.user_roles['level3_dept_admin']).exists():
+            new_data = {'application_status': application_status}
+            new_data.update({
                     'application_status': application_status,
                     'approved_by': self.request.user.id,
                     'approved_at': datetime.datetime.now()
 
-                })
-                request._full_data = new_data
+            })
+            request._full_data = new_data
+                
 
         if application_status:
             ApplicationProgressHistoryInsert(self,{'application':self.get_object(),
@@ -182,7 +182,7 @@ class ApplicationForCertificateOfEstablishmentDetails(generics.RetrieveUpdateAPI
                                             'remarks': request.data.get('remarks'),
                                             'application_status':application_status
                                             })
-        request.data._mutable = False
-        return super().put(request, *args, **kwargs)
+        # request.data._mutable = False
+        return super().patch(request, *args, **kwargs)
     
     

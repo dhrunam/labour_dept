@@ -1,18 +1,27 @@
-<h5 class="mt-5">Details</h5>
+<header class="d-flex justify-content-between align-items-center mt-4">
+    <h4>Details</h4>
+    @if((role && role.showLevel1Admin) && (details && details.application_status === 'approved')){
+        <button class="btn btn-primary" (click)="print_certificate()">Print</button>
+    }
+</header>
 <hr>
 <div class="applying">
     <div class="row g-3">
-        <div class="col-12 col-md-4">
-            <label class="form-label">Department</label>
-            <input type="text" class="form-control shadow-none" value="Department of Labour" disabled>
+        <div class="col-12 col-md-3">
+            <label class="form-label">Application No.</label>
+            <input type="text" class="form-control" name="application_no" [ngModel]="details && (details.application_no.replaceAll('-','/'))" disabled>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <label class="form-label">District</label>
             <input type="text" class="form-control" name="district" [ngModel]="details && details.related_office_situated_at.district_name" disabled>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <label class="form-label">Registration Type</label>
             <input type="text" class="form-control" name="registration_type" [ngModel]="details && details.registration_status" disabled>
+        </div>
+        <div class="col-12 col-md-3">
+            <label class="form-label">Applied to Office</label>
+            <input type="text" class="form-control" [value]="details && details.related_applied_office_details.address" disabled>
         </div>
     </div>
 </div>
@@ -187,11 +196,100 @@
         </div>
     </div>
 </div>
-<div class="additional mt-3 mb-5">
-    <div class="row">
-        <div class="col-4">
-            <label class="form-label">Applied to Office</label>
-            <input type="text" class="form-control" [value]="details && details.related_applied_office_details.address" disabled>
+@if(role && role.showLevel2Admin){
+    <form #level2="ngForm" (ngSubmit)="verify_t2_application(level2)">
+        <div class="additional mt-3 mb-5">
+            <div class="row">
+                <div class="col-2">
+                    <label class="form-label">Cost (in Rupees)</label>
+                    <input type="text" class="form-control" name="cost" [ngModel]="details && details.calculated_fee" [disabled]="details && details.application_status === 'T3-Verification'" #cost="ngModel" required>
+                </div>
+            </div>
+            @if(details && details.calculated_fee === '0.00'){
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit" [disabled]="showLoader">
+                        @if(showLoader){
+                            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            <span role="status">Loading...</span>
+                        }
+                        @else{
+                            Submit
+                        }
+                    </button>
+                </div>
+            }
         </div>
+    </form>
+}
+@if((role && role.showLevel3Admin) && (details && details.token_number !== '' && details.calculated_fee !== '0.00')){
+    @if(details && (details.application_status !== 'approved' && details.application_status !== 'rejected')){
+        <div class="row mt-3 mb-5">
+            <div class="col-2">
+                <label class="form-label">Cost (in Rupees)</label>
+                <input type="text" class="form-control" name="cost" [value]="details && details.calculated_fee" disabled>
+            </div>
+            <div class="col-4">
+                <label class="form-label">BR No.<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="br" [value]="details && details.token_number" disabled>
+            </div>
+        </div>
+        <div class="mt-4 mb-5 text-end">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="fetch_status('rejected')">Reject</button>
+            <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="fetch_status('approved')">Approve</button>
+        </div>
+    }
+    
+}
+@if((role && role.showLevel1Admin) && (details &&details.application_status === 'T3-Verification')){
+    <form #level1="ngForm" (ngSubmit)="verify_t1_application(level1)">
+        <div class="additional mt-3 mb-5">
+            <div class="row">
+                <div class="col-2">
+                    <label class="form-label">Cost (in Rupees)</label>
+                    <input type="text" class="form-control" name="cost" [value]="details && details.calculated_fee" disabled>
+                </div>
+                <div class="col-4">
+                    <label class="form-label">BR No.<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="br" [disabled]="details && details.token_number != ''" [ngModel]="details && details.token_number" #br="ngModel" required>
+                </div>
+            </div>
+            @if(details && details.token_number === ''){
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit" [disabled]="showLoader">
+                        @if(showLoader){
+                            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            <span role="status">Loading...</span>
+                        }
+                        @else{
+                            Submit
+                        }
+                    </button>
+                </div>
+            }
+        </div>
+    </form>
+}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Alert</h1>
+          <button type="button" class="btn-close" #closeBtn data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to {{displayStatus}} ?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" [disabled]="showLoader" [ngClass]="{'btn-primary': status === 'approved', 'btn-danger': status !== 'approved'}" (click)="verify_t3_application()">
+                @if(showLoader){
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                }
+                @else{
+                    {{ status === 'approved' ? 'Approve' : 'Reject'}}
+                }
+            </button>
+        </div>
+      </div>
     </div>
 </div>
