@@ -13,19 +13,54 @@
             </label>
         </li>
     }
-    @if(subMenuSorting && (subMenuSorting.showLevel1Admin || subMenuSorting.showLevel2Admin || subMenuSorting.showLevel3Admin)){
-        @if(subMenuSorting.showLevel1Admin){
+    @if(subMenuSorting && (subMenuSorting.showGeneralUser))
+       {
             <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/apply" (click)="onToggleKey('home')">
                 <label>
                     <i class="bi bi-award-fill"></i>
                     <span>Apply</span>
                 </label>
             </li>
-        }
+        
         <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/applications" (click)="onToggleKey('home')">
             <label>
                 <i class="bi bi-folder"></i>
                 <span>Applications</span>
+            </label>
+        </li>
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/old-shops-establishment/records" (click)="onToggleKey('home')">
+            <label>
+                <i class="bi bi-folder"></i>
+                <span>Old Registered Establishment</span>
+            </label>
+        </li>
+
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/establishment/renew" (click)="onToggleKey('home')">
+            <label>
+                <i class="bi bi-folder"></i>
+                <span>Renew Establishment</span>
+            </label>
+        </li>
+    }
+    @if(subMenuSorting && ( subMenuSorting.showLevel1Admin || subMenuSorting.showLevel2Admin)){
+        <!-- @if(subMenuSorting.showLevel1Admin){
+            <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/apply" (click)="onToggleKey('home')">
+                <label>
+                    <i class="bi bi-award-fill"></i>
+                    <span>Apply</span>
+                </label>
+            </li>
+        } -->
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/shops-establishment/applications" (click)="onToggleKey('home')">
+            <label>
+                <i class="bi bi-folder"></i>
+                <span>Applications</span>
+            </label>
+        </li>
+        <li class="menu-item i" [routerLinkActive]="'routerActive'" routerLink="/dashboard/old-shops-establishment/records" (click)="onToggleKey('home')">
+            <label>
+                <i class="bi bi-folder"></i>
+                <span>Old Registered Establishment</span>
             </label>
         </li>
     }

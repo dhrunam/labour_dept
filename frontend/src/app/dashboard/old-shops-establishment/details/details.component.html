@@ -1,0 +1,197 @@
+<header class="d-flex justify-content-between align-items-center mt-4">
+    <h4>Details</h4>
+   
+</header>
+<hr>
+<div class="applying">
+    <div class="row g-3">
+        <div class="col-12 col-md-3">
+            <label class="form-label">Registration No.</label>
+            <input type="text" class="form-control" name="registration_number" [ngModel]="details && (details.registration_number.replaceAll('-','/'))" disabled>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Date of Registration</label>
+            <input type="text" class="form-control shadow-none" name="full_name" [value]="details && details.date_of_registrations" disabled>
+        </div>
+
+        <div class="col-12 col-md-3">
+            <label class="form-label">Establishment Name</label>
+            <input type="text" class="form-control" name="establishment_name" [ngModel]="details && details.establishment_name" disabled>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Registration Certificate</label><br>
+            @if(details && details.registration_certificate){
+                <span><a [href]="details && details.registration_certificate" target="_blank">View</a></span>
+            }
+           
+        </div>
+    </div>
+</div>
+<div class="details mt-3">
+    <div class="row g-3">
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control shadow-none" name="establishment_address" [value]="details && details.establishment_address" disabled>
+        </div>
+        <div class="col-12 col-md-3">
+            <label class="form-label">District</label>
+            <input type="text" class="form-control" name="district" [ngModel]="details && details.district" disabled>
+        </div>
+       
+       
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Name of Employer</label>
+            <input type="text" class="form-control shadow-none" name="name_employer" [value]="details && details.name_employer" disabled>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <label class="form-label">Name of Manager</label>
+            <input type="text" class="form-control shadow-none" name="name_manager" [value]="details && details.name_manager" disabled>
+     
+        </div>
+    </div>
+    <div class="row g-3 mt-2">
+        <div class="col-12 col-md-6">
+            <label class="form-label">Category of Establishment</label>
+            <input type="text" class="form-control" [value]="details && details.establishment_category" disabled>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Nature of Business</label>
+            <input type="text" class="form-control shadow-none" [value]="details && details.nature_business" disabled>
+        </div>
+    </div>
+    <div class="row g-3 mt-2">
+        <div class="col-12 col-md-6">
+            <label class="form-label">Number of Male Employee</label>
+            <input type="text" class="form-control" [value]="details && details.total_emplyee_male" disabled>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Number of Female Employee</label>
+            <input type="text" class="form-control shadow-none" [value]="details && details.total_emplyee_female" disabled>
+        </div>
+    </div>
+    <div class="row g-3 mt-2">
+        <div class="col-12 col-md-6">
+            <label class="form-label">Status</label>
+            <input type="text" class="form-control" [value]="details && details.application_status" disabled>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label">Remarks</label>
+            <input type="text" class="form-control shadow-none" [value]="details && details.remarks" disabled>
+        </div>
+    </div>
+</div>
+
+@if((role && role.showGeneralUser) && (details && (details.registration_certificate===null || details.application_status=='rejected') )){
+    <form #upload_old_certificate="ngForm" (ngSubmit)="upload_old_registration_certificate(upload_old_certificate)">
+        <div class="applying">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Applying To</h5>
+                <span><strong>Note:</strong> Fields marked with (<span class="text-danger">*</span>) are mandatory</span>
+            </div>
+            <hr>
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">District<span class="text-danger">*</span></label>
+                    <select class="form-select shadow-none" name="district" (change)="onDistrictChange($event)" ngModel #district="ngModel" required>
+                        <option value="">---Select District---</option>
+                        @for(d of districts; track d){
+                            <option [value]="d.id">{{ d.district_name }}</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="office" class="form-label">Applied to Office<span class="text-danger">*</span></label>
+                    <select class="form-select" name="office" ngModel #office="ngModel" required>
+                        <option value="">---Select Office---</option>
+                        @for(o of offices; track o){
+                            <option [value]="o.id">{{ o.office }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="additional mt-3 mb-5">
+            <div class="row">
+                <label for="" class="form-label"> Upload Old Registration Certificate <span class="text-danger">*</span></label>
+                    
+                <div class="col-6 col-md-4">
+                   
+                      
+                        <input type="file" class="form-control shadow-none" (change)="tradeLicenceUpload($event)" name="trade_licence" ngModel #trade_licence="ngModel" required>
+                   
+                </div>
+                <div class="col-6 col-md-4 ">
+                    <button class="btn btn-primary" type="submit" [disabled]="showLoader">
+                        @if(showLoader){
+                            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            <span role="status">Loading...</span>
+                        }
+                        @else{
+                            Submit
+                        }
+                    </button>
+                </div>
+            </div>
+           
+               
+            
+        </div>
+    </form>
+
+  
+}
+
+@if((role && (role.showLevel2Admin || role.showLevel1Admin))){
+    @if(details && (details.application_status !== 'approved' && details.application_status !== 'rejected')){
+        <!-- <div class="row mt-3 mb-5">
+            <div class="col-2">
+                <label class="form-label">Cost (in Rupees)</label>
+                <input type="text" class="form-control" name="cost" [value]="details && details.calculated_fee" disabled>
+            </div>
+            <div class="col-4">
+                <label class="form-label">BR No.<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="br" [value]="details && details.token_number" disabled>
+            </div>
+        </div> -->
+        <div class="mt-4 mb-5 text-end">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="fetch_status('rejected')">Reject</button>
+            <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="fetch_status('approved')">Approve</button>
+        </div>
+    }
+    
+}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Alert</h1>
+          <button type="button" class="btn-close" #closeBtn data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #level2="ngForm" (ngSubmit)="verify_t2_application(level2)">
+            <div class="modal-body">
+                Are you sure you want to {{displayStatus}} ?
+                <br>
+                <div class="col-6">
+                    <label  class="form-label">Remarks</label>
+                    <input type="text" class="form-control" name="remarks" [ngModel]="details && details.remarks"  #remarks="ngModel" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+            
+                <button type="submit" class="btn" [disabled]="showLoader" [ngClass]="{'btn-primary': status === 'approved', 'btn-danger': status !== 'approved'}" >
+                    @if(showLoader){
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        <span role="status">Loading...</span>
+                    }
+                    @else{
+                        {{ status === 'approved' ? 'Approve' : 'Reject'}}
+                    }
+                </button>
+                
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+

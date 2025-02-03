@@ -9,5 +9,6 @@ class DistrictSerializer(serializers.ModelSerializer):
             'id',
             'district_name',
             'short_name',
-            'is_deleted'
+            'is_deleted',
+            'ref_no_prefix',
         )

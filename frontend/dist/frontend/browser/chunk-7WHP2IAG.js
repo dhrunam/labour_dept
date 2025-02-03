@@ -1,0 +1,1 @@
+import"./chunk-CGT2X6C5.js";var o=[{path:"",redirectTo:"/dashboard/district/view",pathMatch:"full"},{path:"view",loadComponent:()=>import("./chunk-QKTHAX4P.js").then(t=>t.ViewComponent)},{path:"add",loadComponent:()=>import("./chunk-SWPNXGRU.js").then(t=>t.EditComponent)}];export{o as routes};

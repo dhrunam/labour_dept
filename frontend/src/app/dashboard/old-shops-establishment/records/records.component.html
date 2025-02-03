@@ -1,0 +1,57 @@
+<h4>Old Certified Establishment Records</h4>
+<form #search="ngForm" (ngSubmit)="onSearch(search)">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" class="form-control shadow-none" placeholder="Old Registratin Number" name="search_text" ngModel #search_text="ngModel" required>
+            @if(search_text.touched && search_text.invalid){
+                <small class="text-danger">Please enter old registration number</small>
+            }
+            
+        </div>
+         <div class="col-md-3">
+            <button class="btn btn-primary" type="submit">
+                @if(loader){
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        &nbsp;<span role="status">Loading...</span>
+                }
+                @else{
+                    Search
+                }
+            </button>
+        </div>
+       
+      
+    </div>
+   
+</form>
+<hr>
+@if(applications[0]){
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Registration No.</th>
+                <th scope="col">Applicant Name</th>
+                <th scope="col">Establishments Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(a of applications; track a; let i=$index){
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <!-- <td>{{ a.registration_number.replaceAll('-','/') }}</td> -->
+                    <td>{{ a.registration_number }}</td>
+                    <td>{{ a.name_employer }}</td>
+                    <td>{{ a.establishment_name }}</td>
+                    <td>{{ a.application_status }}</td>
+                    <td><a [routerLink]="['/dashboard/old-shops-establishment/details', a.id]">View</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@else{
+    <h6>No Results Found !!</h6>
+}

@@ -95,14 +95,23 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'labour_dept_stage_db',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'Darkhorse@7428',
+    #     'HOST': '93.127.199.87', 
+    #     'PORT': '5432'
+    # }
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'labour_dept_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': '93.127.199.87', 
+        'HOST': 'localhost', 
         'PORT': '5432'
-    }
+     }
 }
 
 
@@ -137,14 +146,15 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images)  '   
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-MEDIA_URL = '/api/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -200,23 +210,16 @@ APPLICATION_STATUS={
     # "pending" : "pending",
     "approved" : "approved",
     # "completed":"completed",
-    "t2-verification":"T2-Verfication",
-    "t3-verification":"T3-Verfication",
+    'fee_payment_success' : 'fee_payment_success',
+    "t1-verification":"T1-Verification",
+    "t2-verification":"T2-Verification",
 
 }
-PG_PARAMS={}
+
+# PG_PARAMS={}
 
 # if DEBUG:
-#     PG_PARAMS={
-#         "merchant_code" : "sikkimnic_sbs_uat_2021",
-#         "major_head_code" : "0215",
-#         "minor_head_code" : "01.103",
-#         "return_url" : "http://localhost:8000/api/rti/payment/response",
-#         "redirect_to_front_end_for_application_fee_paymet_status_page" : "http://localhost:4200/dashboard/payment?application=",
-#         "redirect_to_front_end_for_intimation_fee_paymet_status_page" : "http://localhost:4200/dashboard/payment?application=",
-#         "salt" : "31c6163218e5c8233ea9af089785bd3125b210cc995add2da23e36d0779d51d7",
-#         "payment_request_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/PaymentRequestGOS" ,
-#         "payment_status_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/GetTransactionStatus" ,
+#     PG_PARAMS={: "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/GetTransactionStatus" ,
 #     }
 # else:
 #     PG_PARAMS={
@@ -267,6 +270,45 @@ SMS_TEMPLATE = {
 APP_MODULES={
 
 }
+
+PG_PARAMS={}
+
+if DEBUG:
+    PG_PARAMS={
+        "merchant_code" : "BDSKUATY",
+        "client_id":"bdskuaty",
+        # "major_head_code" : "0215",
+        # "minor_head_code" : "01.103",
+        # "return_url" : "https://api.diseso.com/api/application/online_payment/callback",
+        "return_url" : "http://localhost:8000/api/application/online_payment/callback",
+        "redirect_to_front_end_for_application_fee_paymet_success" : "http://localhost:4200/dashboard/shops-establishment/payment/success",
+        "redirect_to_front_end_for_application_fee_paymet_fail" : "http://localhost:4200/dashboard/shops-establishment/payment/fail",
+        "salt" : "G3eAmyVkAzKp8jFq0fqPEqxF4agynvtJ",
+        "payment_request_url" : "https://uat.billdesk.com/pgidsk/PGIMerchantPayment" ,
+        "payment_status_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/GetTransactionStatus" ,
+    }
+   
+else:
+    PG_PARAMS={
+       "merchant_code" : "BDSKUATY",
+       "client_id":"bdskuaty",
+        # "major_head_code" : "0215",
+        # "minor_head_code" : "01.103",
+        "return_url" : "https://api.diseso.com/api/application/online_payment/callback",
+        "redirect_to_front_end_for_application_fee_paymet_success" : "https://labour.diseso.com/dashboard/shops-establishment/payment/success",
+        "redirect_to_front_end_for_application_fee_paymet_fail" : "https://labour.diseso.com/dashboard/shops-establishment/payment/fail",
+        "salt" : "tKU9WjmyRiJTRyR4z5PGDY9VrzMV2MS0",
+        "payment_request_url" : "https://uat1.billdesk.com/u2/payments/ve1_2/orders/create" ,
+        "payment_status_url" : "https://www.sbsebr.com/sbsuat/UATInitiateTransaction/GetTransactionStatus" ,
+    }
+
+#Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'noreply.labour.dept.sikkim@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ubuntu@123'
 
 # Logger specific configuration
 DRF_API_LOGGER_DATABASE = True

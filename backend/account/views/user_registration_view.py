@@ -7,7 +7,7 @@ from backend.utility import file_upload_handler
 from django.contrib.auth import hashers
 import re, json
 from django.conf import settings
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from durin.auth import TokenAuthentication
 from django.db import models
 from datetime import datetime, timedelta
@@ -43,6 +43,7 @@ def VerifyOTP(request, user):
 class UserCreate(generics.CreateAPIView):
     queryset = User
     serializer_class = acc_serializer.UserSerializerForRegistraion
+    permission_classes = (AllowAny,)
     @transaction.atomic()
     def post(self, request, *args, **kwargs):
         try:

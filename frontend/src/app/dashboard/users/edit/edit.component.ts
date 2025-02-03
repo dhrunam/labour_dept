@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
+import { OfficeService } from '../../../services/office.service';
+import { IOfficeDetails } from '../../../interfaces/ioffice-details';
 
 @Component({
   selector: 'app-edit',
@@ -11,8 +13,13 @@ import { Router } from '@angular/router';
   styleUrl: './edit.component.css'
 })
 export class EditComponent {
+  offices: Array<IOfficeDetails> = [];
   loader: boolean = false;
-  constructor(private usersSerivce: UsersService, private router: Router){}
+  constructor(private usersSerivce: UsersService,
+    private officeService : OfficeService,
+    private router: Router){
+    this.get_offices();
+  }
   onRegistration(data: NgForm){
     if(!data.valid){
       data.control.markAllAsTouched();
@@ -29,6 +36,7 @@ export class EditComponent {
       fd.append('group', data.value.role);
       fd.append('is_deleted', 'False');
       fd.append('username', data.value.username);
+      fd.append('office', data.value.organization);
       this.usersSerivce.register_user(fd).subscribe({
         next: data => {
           this.loader = false;
@@ -37,4 +45,12 @@ export class EditComponent {
       })
     }
   }
+  get_offices(){
+    this.officeService.get_all().subscribe({
+      next: data => {
+        this.offices = data;
+      }
+    })
+  }
+
 }

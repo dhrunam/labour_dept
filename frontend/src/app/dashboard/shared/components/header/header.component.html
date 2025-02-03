@@ -1,10 +1,22 @@
 <nav class="navbar" style="background-color: white;">
     <div class="container-fluid">
-        <i class="bi bi-list ms-3 sidebar-toggle" (click)="onInitToggle()"></i>
+        <i class="bi bi-list ms-3 sidebar-toggle" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"></i>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                 <i class="bi bi-box-arrow-right" (click)="onLogout()" style="font-size: 2rem; color: #499ad9; cursor: pointer"></i>
             </li>
         </ul>
     </div>
-  </nav>
+</nav>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="logo text-center text-light">
+            <img src="assets/images/sikkim.png" height="100">
+        </div>
+        <hr>
+        <app-sidebar-menus></app-sidebar-menus>
+    </div>
+</div>

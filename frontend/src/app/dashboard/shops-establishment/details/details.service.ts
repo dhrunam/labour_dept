@@ -9,4 +9,16 @@ export class DetailsService{
     verify_t2(fd: FormData){
         return this.http.patch(`${URL}/api/application/establishment/${fd.get('id')}`, fd);
     }
+
+    verify_t1(fd: FormData){
+        return this.http.patch(`${URL}/api/application/establishment/${fd.get('id')}`, fd);
+    }
+
+    initiate_online_payment(fd: FormData){
+        return this.http.post(`${URL}/api/application/online_payment/initiate`, fd);
+    }
+
+    reject_by_level1(fd: FormData){
+        return this.http.patch(`${URL}/api/application/establishment/${fd.get('id')}`, fd);
+    }
 }

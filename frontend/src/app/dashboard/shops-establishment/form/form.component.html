@@ -15,7 +15,7 @@
             <div class="row g-3">
                 <div class="col-12 col-md-4">
                     <label class="form-label">District<span class="text-danger">*</span></label>
-                    <select class="form-select shadow-none" name="district" ngModel #district="ngModel" required>
+                    <select class="form-select shadow-none" name="district" (change)="onDistrictChange($event)" ngModel #district="ngModel" required>
                         <option value="">---Select District---</option>
                         @for(d of districts; track d){
                             <option [value]="d.id">{{ d.district_name }}</option>
@@ -31,6 +31,13 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-4">
+                    <label for="" class="form-label"> Upload Licence <span class="text-danger">*</span></label>
+                    
+                      
+                        <input type="file" class="form-control shadow-none" (change)="tradeLicenceUpload($event)" name="trade_licence" ngModel #trade_licence="ngModel" required>
+                   
+                </div>
+                <!-- <div class="col-12 col-md-4">
                     <label class="form-label">Reference No.<span class="text-danger">*</span></label>
                     <select class="form-select shadow-none" name="reference_no" ngModel #reference_no="ngModel" required>
                         <option value="">---Select Referrence No.---</option>
@@ -41,7 +48,7 @@
                         <option value="GOS-DL-MGN">GOS/DL/MGN</option>
                         <option value="GOS-DL-PKY">GOS/DL/PKY</option>
                     </select>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="details mt-3">
@@ -65,11 +72,11 @@
                     <input type="text" class="form-control shadow-none" name="email" ngModel #email="ngModel" required>
                 </div>
                 <div class="col-12 col-md-4">
-                    <label class="form-label">Establishments Name<span class="text-danger">*</span></label>
+                    <label class="form-label">Name of Establishment<span class="text-danger">*</span></label>
                     <input type="text" class="form-control shadow-none" name="establishment_name" ngModel #establishment_name="ngModel" required>
                 </div>
                 <div class="col-12 col-md-4">
-                    <label class="form-label">Applicants Photograph<span class="text-danger">*</span></label>
+                    <label class="form-label">Applicant Photograph<span class="text-danger">*</span></label>
                     <input type="file" class="form-control shadow-none" (change)="photoUpload($event)" name="photo" ngModel #photo="ngModel" required>
                 </div>
             </div>
@@ -117,16 +124,16 @@
                     }
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-2">
-                            <input type="text" class="form-control shadow-none" placeholder="Name Parentage" name="employer_parentage_name" ngModel #employer_parentage_name="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Name & Parentage" name="employer_parentage_name"  #employer_parentage_name>
                         </div>
                         <div class="col-12 col-md-2">
-                            <input type="text" class="form-control shadow-none" placeholder="Designation" name="employer_parentage_desg" ngModel #employer_parentage_desg="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Designation" name="employer_parentage_desg" #employer_parentage_desg>
                         </div>
                         <div class="col-12 col-md-4">
-                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address" name="employer_parentage_addr" ngModel #employer_parentage_addr="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address" name="employer_parentage_addr" #employer_parentage_addr>
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Nature of interest: (Whether Partnership Member, Director Shareholders)" name="employer_parentage_interest" ngModel #employer_parentage_interest="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Nature of interest: (Whether Partnership Member, Director Shareholders)" name="employer_parentage_interest" #employer_parentage_interest>
                         </div>
                         <div class="col-1">
                             <button class="btn btn-primary" type="button" (click)="employerParentageDetails('add', { employer_parentage_name: employer_parentage_name.value, employer_parentage_desg: employer_parentage_desg.value, employer_parentage_addr: employer_parentage_addr.value, employer_parentage_interest: employer_parentage_interest.value })">+</button>
@@ -153,13 +160,13 @@
                     }
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Full Name of Employer" name="employer_name" ngModel #employer_name="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name of Employer" name="employer_name" #employer_name>
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Designation of Employer" name="employer_desg" ngModel #employer_desg="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Designation of Employer" name="employer_desg" #employer_desg>
                         </div>
                         <div class="col-12 col-md-5">
-                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address" name="employer_addr" ngModel #employer_addr="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Permanent Address" name="employer_addr" #employer_addr>
                         </div>
                         <div class="col-1">
                             <button class="btn btn-primary" type="button" (click)="employerDetails('add', { employer_name: employer_name.value, employer_desg: employer_desg.value, employer_addr: employer_addr.value })">+</button>
@@ -187,13 +194,13 @@
                     }
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Full Name" name="employer_family_name" ngModel #employer_family_name="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name" name="employer_family_name" #employer_family_name>
                         </div>
                         <div class="col-12 col-md-2">
-                            <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_family_age" ngModel #employer_family_age="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_family_age" #employer_family_age>
                         </div>
                         <div class="col-12 col-md-3">
-                            <select class="form-control shadow-none" name="employer_family_gender" [ngModel]="''" #employer_family_gender="ngModel">
+                            <select class="form-control shadow-none" name="employer_family_gender" [ngModel]="''" #employer_family_gender>
                                 <option value="">---Select Gender---</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -201,7 +208,7 @@
                             </select>
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_family_rel" ngModel #employer_family_rel="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_family_rel" #employer_family_rel>
                         </div>
                         <div class="col-1">
                             <button class="btn btn-primary" type="button" (click)="employerFamilyMemberDetails('add', { employer_family_name: employer_family_name.value, employer_family_age: employer_family_age.value, employer_family_gender: employer_family_gender.value, employer_family_rel: employer_family_rel.value})">+</button>
@@ -228,13 +235,13 @@
                     }
                     <div class="row g-3 mt-2">
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Full Name" name="employer_management_name" ngModel #employer_management_name="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Full Name" name="employer_management_name" #employer_management_name>
                         </div>
                         <div class="col-12 col-md-2">
-                            <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_management_age" ngModel #employer_management_age="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Age" name="employer_management_age"  #employer_management_age>
                         </div>
                         <div class="col-12 col-md-3">
-                            <select class="form-control shadow-none" name="employer_management_gender" [ngModel]="''" #employer_management_gender="ngModel">
+                            <select class="form-control shadow-none" name="employer_management_gender" [ngModel]="''" #employer_management_gender>
                                 <option value="">---Select Gender---</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -242,7 +249,7 @@
                             </select>
                         </div>
                         <div class="col-12 col-md-3">
-                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_management_rel" ngModel #employer_management_rel="ngModel">
+                            <input type="text" class="form-control shadow-none" placeholder="Relationship With Employer" name="employer_management_rel" #employer_management_rel>
                         </div>
                         <div class="col-1">
                             <button class="btn btn-primary" type="button" (click)="managementEmployeeDetails('add', { employer_management_name: employer_management_name.value, employer_management_age: employer_management_age.value, employer_management_gender: employer_management_gender.value, employer_management_rel: employer_management_rel.value})">+</button>
@@ -251,13 +258,31 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-6">
-                    <label class="form-label">Total Number of Employees (Old)<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control shadow-none" placeholder="Total" name="old_total" ngModel #old_total="ngModel" required>
+                <div class="col-4">
+                    <label class="form-label">Total Number of Male Employees (Age 18 and above)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="" name="total_emplyee_male_18" ngModel #total_emplyee_male_18="ngModel" required>
                 </div>
-                <div class="col-6">
-                    <label class="form-label">Total Number of Employees (Young)<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control shadow-none" placeholder="Total" name="young_total" ngModel #young_total="ngModel" required>
+                <div class="col-4">
+                    <label class="form-label">Total Number of Female Employees (Age 18 and above)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="" name="total_emplyee_female_18" ngModel #total_emplyee_female_18="ngModel" required>
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Total Number of Other Gender Employees (Age 18 and above)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="" name="total_emplyee_other_18" ngModel #total_emplyee_other_18="ngModel" required>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <label class="form-label">Total Number of Male Employees (Age below 18 years)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="" name="total_emplyee_male_14" ngModel #total_emplyee_male_14="ngModel" required>
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Total Number of Female Employees (Age below 18 years)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="" name="total_emplyee_female_14" ngModel #total_emplyee_female_14="ngModel" required>
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Total Number of Other Gender Employees (Age below 18 years)<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control shadow-none" placeholder="" name="total_emplyee_other_14" ngModel #total_emplyee_other_14="ngModel" required>
                 </div>
             </div>
             <div class="row mt-4">
@@ -281,11 +306,11 @@
             <hr>
             <div class="row">
                 <div class="col-4">
-                    <label class="form-label">Applied to Office<span class="text-danger">*</span></label>
+                    <label for="office" class="form-label">Applied to Office<span class="text-danger">*</span></label>
                     <select class="form-select" name="office" ngModel #office="ngModel" required>
                         <option value="">---Select Office---</option>
                         @for(o of offices; track o){
-                            <option [value]="o.id">{{ o.address }}</option>
+                            <option [value]="o.id">{{ o.office }}</option>
                         }
                     </select>
                 </div>

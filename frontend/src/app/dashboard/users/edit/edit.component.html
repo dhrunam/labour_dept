@@ -50,7 +50,7 @@
                 <option value="">---Select Role---</option>
                 <option value="level1_dept_admin">Level 1 Admin</option>
                 <option value="level2_dept_admin">Level 2 Admin</option>
-                <option value="level3_dept_admin">Level 3 Admin</option>
+                <!-- <option value="level3_dept_admin">Level 3 Admin</option> -->
             </select>
             @if(gender.touched && gender.invalid){
                 <small class="text-danger">Please select gender</small>
@@ -68,6 +68,19 @@
                 <small class="text-danger">Please confirm password</small>
             }
         </div>
+        <div class="col-md-4 mt-3">
+            <select class="form-select shadow-none" name="organization" ngModel #organization="ngModel" required>
+                <option value="">---Select Organization---</option>
+                @for(o of offices; track o){
+                    <option [value]="o.id">{{ o.office }}</option>
+                }
+                <!-- <option value="level3_dept_admin">Level 3 Admin</option> -->
+            </select>
+            @if(gender.touched && gender.invalid){
+                <small class="text-danger">Please select gender</small>
+            }
+        </div>
+      
     </div>
     <div class="mt-4 mb-3 text-end">
         <button class="btn btn-primary" type="submit">

@@ -1,2 +1,90 @@
 <h3>Dashboard</h3>
 <hr>
+@if((role && (role.showLevel1Admin || role.showLevel2Admin) && (report_data))){
+<div class="container mt-4">
+    <div class="row g-3">
+        <!-- Box 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="p-3 border bg-light text-center">
+                <h5>New Application:</h5>
+                <div *ngIf="report_data">
+                    {{ report_data.new_application }}
+                </div>
+            </div>
+        </div>
+        <!-- Box 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="p-3 border bg-light text-center">
+                <h5>Approved Application:</h5>
+                <div *ngIf="report_data">
+                    {{ report_data.approved_application }}
+                </div>
+            </div>
+        </div>
+        <!-- Box 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="p-3 border bg-light text-center">
+                <h5>Rejected Application:</h5>
+                <div *ngIf="report_data">
+                    {{ report_data.rejected_application }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="p-3 border bg-light text-center">
+                <h5>Old Registered Establishment:</h5>
+                <div *ngIf="report_data">
+                    {{ report_data.total_old }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@if((role && (role.showGeneralUser) && (report_data))){
+    <div class="container mt-4">
+        <div class="row g-3">
+            <!-- Box 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 border bg-light text-center">
+                    <h5>New Application:</h5>
+                    <div *ngIf="report_data">
+                        {{ report_data.new_application }}
+                    </div>
+                </div>
+            </div>
+            <!-- Box 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 border bg-light text-center">
+                    <h5>Approved Application:</h5>
+                    <div *ngIf="report_data">
+                        {{ report_data.approved_application }}
+                    </div>
+                </div>
+            </div>
+            <!-- Box 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 border bg-light text-center">
+                    <h5>Rejected Application:</h5>
+                    <div *ngIf="report_data">
+                        {{ report_data.rejected_application }}
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 border bg-light text-center">
+                    <h5>Old Registered Establishment:</h5>
+                    <div *ngIf="report_data">
+                        {{ report_data.total_old }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    
+    
+

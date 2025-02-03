@@ -4,7 +4,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 export const redirectGuard: CanActivateFn = (route, state) => {
   let localStorageService = inject(LocalStorageService);
-  if(!localStorageService.getToken()){
+  if(!localStorageService.getToken()||localStorageService.getToken()=='undefined'){
     return true;
   }
   window.location.href = '/dashboard';

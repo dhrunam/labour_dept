@@ -1,0 +1,31 @@
+<header class="d-flex justify-content-between mt-5">
+    <h4>Districts(s)</h4>
+    <button class="btn btn-primary" routerLink="/dashboard/district/add">+ Add</button>
+</header>
+<hr>
+@if(districts && districts[0]){
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S.No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Short Name</th>
+                    <th scope="col">Application Prefix</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(d of districts; track d; let i=$index){
+                    <tr>
+                        <td>{{ i+1 }}</td>
+                        <td>{{ d.district_name }} </td>
+                        <td>{{ d.short_name }}</td>
+                        <td>{{ d.ref_no_prefix }}</td>
+                        <td> View </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

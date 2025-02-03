@@ -52,7 +52,7 @@ class ApplicationForCertificateOfEstablishment(models.Model):
 
 # Signal to handle file deletion when an instance is deleted
 @receiver(post_delete, sender=ApplicationForCertificateOfEstablishment)
-def delete_file_from_user_qualification_on_delete(sender, instance, **kwargs):
+def delete_file_from_application_on_delete(sender, instance, **kwargs):
     if instance.photograph_applicant:
         if os.path.isfile(instance.photograph_applicant.path):
             os.remove(instance.photograph_applicant.path)
@@ -62,7 +62,7 @@ def delete_file_from_user_qualification_on_delete(sender, instance, **kwargs):
 
 # Signal to handle old file deletion before saving a new one
 @receiver(pre_save, sender=ApplicationForCertificateOfEstablishment)
-def delete_old_file_from_user_qualificationon_on_update(sender, instance, **kwargs):
+def delete_old_file_from_application_on_update(sender, instance, **kwargs):
     if not instance.pk:
         return  # If instance is new, nothing to do
     
@@ -71,15 +71,15 @@ def delete_old_file_from_user_qualificationon_on_update(sender, instance, **kwar
     except sender.DoesNotExist:
         return  # If instance does not exist, nothing to do
 
-    old_file = old_instance.certificate
-    new_file = instance.certificate
+    old_file = old_instance.photograph_applicant
+    new_file = instance.photograph_applicant
 
     if old_file and old_file != new_file:  # Check if the file is different
         if os.path.isfile(old_file.path):
             os.remove(old_file.path)
 
-    old_file = old_instance.marksheet
-    new_file = instance.marksheet
+    old_file = old_instance.trade_licence
+    new_file = instance.trade_licence
 
     if old_file and old_file != new_file:  # Check if the file is different
         if os.path.isfile(old_file.path):
@@ -89,7 +89,7 @@ def delete_old_file_from_user_qualificationon_on_update(sender, instance, **kwar
 class ApplicationProgressHistory(models.Model):
     application = models.ForeignKey(ApplicationForCertificateOfEstablishment, on_delete=models.SET_NULL, null=True, related_name='application_progress_history')
     initiated_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="application_progress_history")
-    remarks = models.CharField(max_length=1024, default='',blank=True )
+    remarks = models.CharField(max_length=1024, default='',blank=True, null=True )
     application_status = models.CharField(max_length=128, null=False, default=settings.APPLICATION_STATUS["received"])
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -125,5 +125,58 @@ class ApplicationNumberSequence(models.Model):
     sequence = models.IntegerField(default=0)
 
 
+
+class OldCertificateOfEstablishment(models.Model):
+    registration_number = models.CharField(max_length=50, null=True)
+    date_of_registrations = models.CharField(max_length=50, null=True)
+    establishment_name = models.CharField(max_length =256, null=True)
+    establishment_address = models.CharField(max_length =256, null=True)
+    district = models.CharField(max_length=50, null=True)
+    establishment_pincode = models.CharField(max_length =6, null=True)
+    name_employer = models.CharField(max_length =256, null=True)
+    name_manager = models.CharField(max_length =256, null=True)
+    nature_business = models.CharField(max_length = 1024, null = True)
+    establishment_category = models.CharField(max_length= 128, null=True)
+    total_emplyee_male=models.IntegerField(default=0)
+    total_emplyee_female=models.IntegerField(default=0)
+    registration_certificate = models.FileField(upload_to='applicant/old/registration_certificate/',  null=True,  validators=[field_validator.FileExtensionValidator(['.jpg', '.jpeg', '.png', '.pdf']),
+                                            field_validator.FileSizeValidator(10*1024*1024),
+                                            field_validator.FileMimeTypeValidator(['image/jpeg', 'image/png', 'application/pdf'])])
+   
+    applied_office_details = models.ForeignKey(mst_model.OfficeDetails, on_delete = models.SET_NULL, null=True, related_name="old_certificate_of_establishment")
+    
+    application_status = models.CharField(max_length=128, null=True, default=settings.APPLICATION_STATUS["received"])
+
+    applied_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL, null=True, related_name="old_certificate_of_establishment_applied_by")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="old_certificate_of_establishment_updated_by")
+    updated_at = models.DateTimeField(auto_now=True)
+    approved_at = models.DateTimeField(auto_now=False, null=True)
+    approved_by = models.ForeignKey(acc_models.User, on_delete=models.SET_NULL,null=True, related_name="old_certificate_of_establishment_approved_by")
+    remarks = models.CharField(max_length=1028, null=True)
+# Signal to handle file deletion when an instance is deleted
+@receiver(post_delete, sender=OldCertificateOfEstablishment)
+def delete_file_from_application_on_delete(sender, instance, **kwargs):
+    if instance.registration_certificate:
+        if os.path.isfile(instance.registration_certificate.path):
+            os.remove(instance.registration_certificate.path)
+   
+# Signal to handle old file deletion before saving a new one
+@receiver(pre_save, sender=OldCertificateOfEstablishment)
+def delete_old_file_from_application_on_update(sender, instance, **kwargs):
+    if not instance.pk:
+        return  # If instance is new, nothing to do
+    
+    try:
+        old_instance = sender.objects.get(pk=instance.pk)
+    except sender.DoesNotExist:
+        return  # If instance does not exist, nothing to do
+
+    old_file = old_instance.registration_certificate
+    new_file = instance.registration_certificate
+
+    if old_file and old_file != new_file:  # Check if the file is different
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
 
 

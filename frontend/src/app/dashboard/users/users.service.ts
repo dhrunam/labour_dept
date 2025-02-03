@@ -11,4 +11,5 @@ export class UsersService{
     register_user(fd: FormData){
         return this.http.post(`${URL}/api/admin/user/register`, fd);
     }
+    
 }
